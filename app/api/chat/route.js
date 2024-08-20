@@ -46,7 +46,7 @@ export async function POST(req){
     const openai= new OpenAI()
 
     const text= data[data.length -1].content
-    const embedding= await OpenAI.Embeddings.create({
+    const embedding= await openai.embeddings.create({
         model: 'text-embedding-3-small',
         input:text,
         encoding_format: 'float',
@@ -61,7 +61,7 @@ export async function POST(req){
 
     let resultString='\n\nReturned results from vector db (done automatically)'
     results.matches.forEach((match)=>{
-        resultStrings+=`
+        resultString+=`
         Professor: ${match.id}
         Review: ${match.metadata.review}
         Subject:${match.metadata.subject}
@@ -79,13 +79,13 @@ export async function POST(req){
                 role:'system', content:systemPrompt
             },
             ...lastDataWithoutLastMessage,
-            {role: 'user', content: LastMessageContent} 
+            {role: 'user', content: lastMessageContent} 
         ],
         model: 'gpt-4o-mini',
         stream:true,
     })
 
-    const stream = ReadableStream({
+    const stream = new ReadableStream({
         async start(controller){
             const encoder= new TextEncoder()
             try{
