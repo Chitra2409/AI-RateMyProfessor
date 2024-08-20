@@ -1,0 +1,131 @@
+{
+    "reviews": [
+
+  {
+    "professor": "Dr. Emily Chen",
+    "subject": "Calculus II",
+    "stars": 5,
+    "review": "Dr. Chen is an exceptional professor. She is extremely knowledgeable and passionate about the subject, and her explanations are clear and concise. The coursework is challenging but manageable, and she provides ample support during office hours. I highly recommend taking any course with Dr. Chen."
+  },
+  {
+    "professor": "Professor John Smith",
+    "subject": "Principles of Microeconomics",
+    "stars": 3,
+    "review": "Professor Smith is knowledgeable about the subject matter, but his lectures can be dry and difficult to follow at times. The grading seems a bit subjective, and I wish he provided more feedback on assignments."
+  },
+  {
+    "professor": "Dr. Sarah Lee",
+    "subject": "Organic Chemistry I",
+    "stars": 4,
+    "review": "Dr. Lee is passionate about the subject and really tries to help students understand the material. The lab component is well-organized, and she is always willing to answer questions during office hours. The exams are challenging, but fair."
+  },
+  {
+    "professor": "Professor Mike Johnson",
+    "subject": "Introduction to Psychology",
+    "stars": 3,
+    "review": "Professor Johnson's lectures can be interesting, but he tends to go off on tangents. The textbook is essential for understanding the material, and the grading is heavily based on multiple-choice exams. I wish there were more opportunities for class participation and discussion."
+  },
+  {
+    "professor": "Dr. Jane Doe",
+    "subject": "Introduction to Computer Science",
+    "stars": 5,
+    "review": "Dr. Doe is an excellent professor. She explains the concepts clearly and is always available to help during office hours. The coursework is challenging but fair, and I feel like I've learned a lot in this class."
+  },
+  {
+    "professor": "Professor Alex Williams",
+    "subject": "Intro to Sociology",
+    "stars": 4,
+    "review": "Professor Williams is engaging and encourages class discussions. The reading materials are relevant and thought-provoking. My only complaint is that the grading can be a bit inconsistent at times."
+  },
+  {
+    "professor": "Dr. Maria Gonzalez",
+    "subject": "Organic Chemistry II",
+    "stars": 4,
+    "review": "Dr. Gonzalez is extremely knowledgeable and passionate about the subject. The labs are well-designed, and she provides excellent support during office hours. The exams are challenging but fair."
+  },
+  {
+    "professor": "Professor David Johnson",
+    "subject": "American Government",
+    "stars": 3,
+    "review": "Professor Johnson's lectures can be dry and difficult to stay engaged with. The course material is dense, and the exams focus heavily on memorization. I wish there were more opportunities for discussion and analysis."
+  },
+  {
+    "professor": "Dr. Lisa Zhang",
+    "subject": "Biochemistry",
+    "stars": 5,
+    "review": "Dr. Zhang is an amazing professor. She has a deep understanding of the subject matter and presents the material in a clear and engaging way. The labs are well-organized, and she is always available to provide additional support. I highly recommend taking any course with Dr. Zhang."
+  },
+  {
+    "professor": "Professor Michael Martinez",
+    "subject": "Intro to Marketing",
+    "stars": 4,
+    "review": "Professor Martinez brings a wealth of real-world experience to the classroom. His lectures are informative and relevant, and he encourages class participation. The coursework is challenging but fair, and I feel like I've gained valuable insights into the field of marketing."
+  },
+  {
+    "professor": "Dr. Samantha Kim",
+    "subject": "Molecular Biology",
+    "stars": 5,
+    "review": "Dr. Kim is an exceptional professor. Her lectures are well-structured and engaging, and she has a knack for breaking down complex concepts in a way that is easy to understand. The lab work is challenging but rewarding, and she is always available to provide additional support and guidance."
+  },
+  {
+    "professor": "Professor Olivia Davis",
+    "subject": "Principles of Management",
+    "stars": 3,
+    "review": "While Professor Davis is knowledgeable about the subject matter, her teaching style can be a bit dry and monotonous at times. The coursework is heavily focused on textbook readings and multiple-choice exams, which I find to be less engaging than more interactive learning activities."
+  },
+  {
+    "professor": "Dr. Mark Nguyen",
+    "subject": "Organic Chemistry I",
+    "stars": 4,
+    "review": "Dr. Nguyen is a dedicated and knowledgeable professor. His lectures are well-organized and he is always willing to provide additional support during office hours. The lab component is challenging but rewarding, and I feel like I have a solid understanding of the material."
+  },
+  {
+    "professor": "Professor Jessica Lee",
+    "subject": "Introduction to Psychology",
+    "stars": 4,
+    "review": "Professor Lee is an engaging and enthusiastic lecturer. She does an excellent job of relating the course material to real-world examples and encouraging class discussion. The assignments and exams are reasonable and I feel like I've gained a good understanding of the foundations of psychology."
+  },
+  {
+    "professor": "Dr. Robert Chen",
+    "subject": "Calculus I",
+    "stars": 4,
+    "review": "Dr. Chen is a knowledgeable and helpful professor. His explanations of the concepts are clear and concise, and he is always available to provide additional support during office hours. The coursework is challenging but fair, and I feel like I've developed a strong foundation in calculus."
+  },
+  {
+    "professor": "Professor Sophia Nguyen",
+    "subject": "Introduction to Sociology",
+    "stars": 5,
+    "review": "Professor Nguyen is an exceptional teacher. Her lectures are engaging and thought-provoking, and she does an excellent job of encouraging class discussion and critical thinking. The assignments and exams are reasonable and I feel like I've gained a deep understanding of the core concepts in sociology."
+  },
+  {
+    "professor": "Dr. David Lee",
+    "subject": "Organic Chemistry II",
+    "stars": 4,
+    "review": "Dr. Lee is a knowledgeable and dedicated professor. His lectures are well-organized and he is always willing to provide additional support during office hours. The lab component is challenging but rewarding, and I feel like I've developed a strong understanding of the material."
+  },
+  {
+    "professor": "Professor Emma Nguyen",
+    "subject": "Introduction to Marketing",
+    "stars": 3,
+    "review": "While Professor Nguyen is knowledgeable about the subject matter, her lectures can be a bit dry and difficult to stay engaged with. The coursework is heavily focused on textbook readings and multiple-choice exams, which I find to be less engaging than more interactive learning activities."
+  },
+  {
+    "professor": "Dr. Michael Lee",
+    "subject": "Molecular Biology",
+    "stars": 5,
+    "review": "Dr. Lee is an exceptional professor. His lectures are engaging and he has a deep understanding of the subject matter. The lab work is challenging but rewarding, and he is always available to provide additional support and guidance. I highly recommend taking any course with Dr. Lee."
+  },
+  {
+    "professor": "Professor Sarah Chen",
+    "subject": "Principles of Management",
+    "stars": 4,
+    "review": "Professor Chen brings a wealth of real-world experience to the classroom. Her lectures are informative and relevant, and she encourages class participation. The coursework is challenging but fair, and I feel like I've gained valuable insights into the field of management."
+  },
+  {
+    "professor": "Dr. Olivia Nguyen",
+    "subject": "Biochemistry",
+    "stars": 5,
+    "review": "Dr. Nguyen is an amazing professor. She has a deep understanding of the subject matter and presents the material in a clear and engaging way. The labs are well-organized, and she is always available to provide additional support. I highly recommend taking any course with Dr. Nguyen."
+  }
+]
+}
