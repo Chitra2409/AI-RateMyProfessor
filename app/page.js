@@ -76,70 +76,49 @@ export default function Home() {
   };
 
   return (
-    <Box
-      width="100vw"
-      minHeight="100vh"
-      display="flex"
-      flexDirection="column"
-      justifyContent="center"
-      alignItems="center"
-      sx={{
-        background: "linear-gradient(135deg, #6dd5fa, #ffffff)",
-        padding: { xs: 2, md: 4 },
-      }}
-    >
-      <Paper
-        elevation={8}
-        sx={{
-          width: "100%",
-          maxWidth: "600px",
-          height: "80vh",
-          borderRadius: 8,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          padding: 3,
-          bgcolor: "#f9f9f9",
-          boxShadow: "0px 12px 24px rgba(0, 0, 0, 0.1)",
-        }}
+    <>
+      <Box
+        width="100vw"
+        height="100vh"
+        display="flex"
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center"
       >
-        {/* Chat Messages */}
         <Stack
           direction="column"
-          spacing={2}
-          flexGrow={1}
-          overflow="auto"
-          sx={{ padding: 1 }}
+          width="500px"
+          height="700px"
+          border="1px solid black"
+          p={2}
+          spacing={3}
         >
-          {messages.map((message, index) => (
-            <Box
-              key={index}
-              display="flex"
-              justifyContent={
-                message.role === "assistant" ? "flex-start" : "flex-end"
-              }
-            >
-              <Fade in>
+          <Stack
+            direction="column"
+            spacing={2}
+            flexGrow={1}
+            overflow="auto"
+            maxHeight="100%"
+          >
+            {messages.map((message, index) => (
+              <Box
+                key={index}
+                display="flex"
+                justifyContent={
+                  message.role === "assistant" ? "flex-start" : "flex-end"
+                }
+              >
                 <Box
-                  component={Paper}
-                  elevation={2}
-                  sx={{
-                    maxWidth: "75%",
-                    padding: 2,
-                    borderRadius: 4,
-                    bgcolor:
-                      message.role === "assistant" ? "#e1f5fe" : "#bbdefb",
-                    color: "#333",
-                    wordWrap: "break-word",
-                    boxShadow:
-                      message.role === "assistant"
-                        ? ""
-                        : "0px 2px 10px rgba(0, 0, 0, 0.1)",
-                  }}
+                  bgcolor={
+                    message.role === "assistant"
+                      ? "primary.main"
+                      : "secondary.main"
+                  }
+                  color="white"
+                  borderRadius={16}
+                  p={3}
                 >
-                  <Typography variant="body2" sx={{ fontSize: "16px" }}>
-                    {message.content}
-                  </Typography>
+                  {message.content}
                 </Box>
               </Fade>
             </Box>
