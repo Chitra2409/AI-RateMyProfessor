@@ -1,196 +1,185 @@
-"use client";
-import { useState, useEffect, useRef } from "react";
-import {
-  Box,
-  Button,
-  Paper,
-  Stack,
-  TextField,
-  Typography,
-  CircularProgress,
-  Fade,
-} from "@mui/material";
-import SendIcon from "@mui/icons-material/Send";
+import React from 'react';
+import { Container, Typography, Button, Box, Grid, Card, CardContent } from '@mui/material';
+import { School, Insights, Timer, CheckCircle, DataUsage, Person } from '@mui/icons-material'; // Material Icons
 
-export default function Home() {
-  const [messages, setMessages] = useState([
-    {
-      role: "assistant",
-      content:
-        "Hi! I'm the Rate My Professor support assistant. How can I help you today?",
-    },
-  ]);
-  const [message, setMessage] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const chatEndRef = useRef(null);
-
-  const scrollToBottom = () => {
-    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
-
-  const sendMessage = async () => {
-    if (message.trim() === "") return;
-
-    setMessages((messages) => [
-      ...messages,
-      { role: "user", content: message },
-      { role: "assistant", content: "" },
-    ]);
-    setMessage("");
-    setIsLoading(true);
-
-    const response = await fetch("/api/chat", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify([...messages, { role: "user", content: message }]),
-    });
-
-    const reader = response.body.getReader();
-    const decoder = new TextDecoder();
-
-    let result = "";
-    reader.read().then(function processText({ done, value }) {
-      if (done) {
-        setIsLoading(false);
-        return result;
-      }
-
-      const text = decoder.decode(value || new Uint8Array(), { stream: true });
-      setMessages((messages) => {
-        const lastMessage = messages[messages.length - 1];
-        const otherMessages = messages.slice(0, messages.length - 1);
-        return [
-          ...otherMessages,
-          { ...lastMessage, content: lastMessage.content + text },
-        ];
-      });
-
-      return reader.read().then(processText);
-    });
-  };
-
+const LandingPage = () => {
   return (
     <Box
-      width="100vw"
-      minHeight="100vh"
-      display="flex"
-      flexDirection="column"
-      justifyContent="center"
-      alignItems="center"
       sx={{
-        background: "linear-gradient(135deg, #6dd5fa, #ffffff)",
-        padding: { xs: 2, md: 4 },
+        background: 'linear-gradient(135deg, #6dd5fa, #ffffff)',
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
       }}
     >
-      <Paper
-        elevation={8}
-        sx={{
-          width: "100%",
-          maxWidth: "600px",
-          height: "80vh",
-          borderRadius: 8,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          padding: 3,
-          bgcolor: "#f9f9f9",
-          boxShadow: "0px 12px 24px rgba(0, 0, 0, 0.1)",
-        }}
-      >
-        {/* Chat Messages */}
-        <Stack
-          direction="column"
-          width="500px"
-          height="700px"
-          border="2px solid black"
-          p={2}
-          spacing={3}
-        >
-          {messages.map((message, index) => (
-            <Box
-              key={index}
-              display="flex"
-              justifyContent={
-                message.role === "assistant" ? "flex-start" : "flex-end"
-              }
-            >
-              <Fade in>
-                <Box
-                  component={Paper}
-                  elevation={2}
-                  sx={{
-                    maxWidth: "75%",
-                    padding: 2,
-                    borderRadius: 4,
-                    bgcolor:
-                      message.role === "assistant" ? "#e1f5fe" : "#bbdefb",
-                    color: "#333",
-                    wordWrap: "break-word",
-                    boxShadow:
-                      message.role === "assistant"
-                        ? ""
-                        : "0px 2px 10px rgba(0, 0, 0, 0.1)",
-                  }}
-                >
-                  <Typography variant="body2" sx={{ fontSize: "16px" }}>
-                    {message.content}
+      {/* Hero Section */}
+      <Container maxWidth="md" sx={{ textAlign: 'center', py: 6 }}>
+        <Typography variant="h2" gutterBottom>
+          AI-Driven Professor Recommendation System
+        </Typography>
+        <Typography variant="h6" color="textSecondary" gutterBottom>
+          Personalized recommendations to help you find the best professors for your courses.
+        </Typography>
+        <Button variant="contained" color="primary" sx={{ mt: 4 }}>
+          Get Started
+        </Button>
+
+        {/* Features Section */}
+        <Grid container spacing={4} sx={{ mt: 6 }}>
+          <Grid item xs={12} md={4}>
+            <Card sx={{ height: '100%', backgroundColor: '#f0f4f8', textAlign: 'center', padding: '20px' }}>
+              <School sx={{ fontSize: 50, color: '#6dd5fa' }} />
+              <CardContent>
+                <Typography variant="h5" gutterBottom>
+                  Personalized Recommendations
+                </Typography>
+                <Typography variant="body1">
+                  Receive suggestions tailored to your academic goals, based on ratings, reviews, and teaching styles.
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+
+          <Grid item xs={12} md={4}>
+            <Card sx={{ height: '100%', backgroundColor: '#f0f4f8', textAlign: 'center', padding: '20px' }}>
+              <Insights sx={{ fontSize: 50, color: '#6dd5fa' }} />
+              <CardContent>
+                <Typography variant="h5" gutterBottom>
+                  Advanced AI Integration
+                </Typography>
+                <Typography variant="body1">
+                  Leverage the power of OpenAI's GPT-4 and Pinecone's vector similarity search to find the best professor matches.
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+
+          <Grid item xs={12} md={4}>
+            <Card sx={{ height: '100%', backgroundColor: '#f0f4f8', textAlign: 'center', padding: '20px' }}>
+              <Timer sx={{ fontSize: 50, color: '#6dd5fa' }} />
+              <CardContent>
+                <Typography variant="h5" gutterBottom>
+                  Real-Time Interaction
+                </Typography>
+                <Typography variant="body1">
+                  Enjoy a responsive and interactive user experience with real-time recommendations delivered via streaming.
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+        </Grid>
+
+        {/* Comparison Section */}
+        <Box sx={{ mt: 8 }}>
+          <Typography variant="h4" gutterBottom>
+            Why Choose ProfSpector Over Traditional Methods?
+          </Typography>
+
+          <Grid container spacing={4} sx={{ mt: 4 }}>
+            <Grid item xs={12} md={6}>
+              <Card sx={{ height: '100%', backgroundColor: '#e0f7fa', padding: '20px' }}>
+                <CardContent>
+                  <Typography variant="h5" gutterBottom>
+                    Traditional Methods
                   </Typography>
-                </Box>
-              </Fade>
-            </Box>
-          ))}
-          <div ref={chatEndRef} />
-        </Stack>
+                  <Box sx={{ mt: 2, display: 'flex', alignItems: 'center' }}>
+                    <Person sx={{ fontSize: 40, color: '#ff7043' }} />
+                    <Typography variant="h6" sx={{ ml: 2 }}>Ease of Use</Typography>
+                  </Box>
+                  <Typography variant="body2" sx={{ mt: 1 }}>
+                    Requires reaching out to seniors or wandering around campus.
+                  </Typography>
 
-        {/* Loading Indicator */}
-        {isLoading && (
-          <Box display="flex" justifyContent="center" mb={2}>
-            <CircularProgress size={24} sx={{ color: "#0288d1" }} />
-          </Box>
-        )}
+                  <Box sx={{ mt: 2, display: 'flex', alignItems: 'center' }}>
+                    <CheckCircle sx={{ fontSize: 40, color: '#ff7043' }} />
+                    <Typography variant="h6" sx={{ ml: 2 }}>Accuracy of Information</Typography>
+                  </Box>
+                  <Typography variant="body2" sx={{ mt: 1 }}>
+                    Varies based on the person consulted; may be biased.
+                  </Typography>
 
-        {/* Input and Send Button */}
-        <Stack direction="row" spacing={2} alignItems="center" sx={{ mt: 2 }}>
-          <TextField
-            label="Type your message..."
-            variant="outlined"
-            fullWidth
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            sx={{
-              bgcolor: "#ffffff",
-              borderRadius: 4,
-              "& .MuiOutlinedInput-root": {
-                borderRadius: 4,
-              },
-              boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
-            }}
-          />
-          <Button
-            variant="contained"
-            onClick={sendMessage}
-            endIcon={<SendIcon />}
-            sx={{
-              bgcolor: "#0288d1",
-              color: "#fff",
-              paddingX: 3,
-              borderRadius: 4,
-              "&:hover": {
-                bgcolor: "#0277bd",
-              },
-              boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
-            }}
-          >
-            Send
-          </Button>
-        </Stack>
-      </Paper>
+                  <Box sx={{ mt: 2, display: 'flex', alignItems: 'center' }}>
+                    <Timer sx={{ fontSize: 40, color: '#ff7043' }} />
+                    <Typography variant="h6" sx={{ ml: 2 }}>Time Efficiency</Typography>
+                  </Box>
+                  <Typography variant="body2" sx={{ mt: 1 }}>
+                    Time-consuming; requires physical effort.
+                  </Typography>
+
+                  <Box sx={{ mt: 2, display: 'flex', alignItems: 'center' }}>
+                    <Person sx={{ fontSize: 40, color: '#ff7043' }} />
+                    <Typography variant="h6" sx={{ ml: 2 }}>Personalization</Typography>
+                  </Box>
+                  <Typography variant="body2" sx={{ mt: 1 }}>
+                    Limited to the opinions of a few people.
+                  </Typography>
+
+                  <Box sx={{ mt: 2, display: 'flex', alignItems: 'center' }}>
+                    <DataUsage sx={{ fontSize: 40, color: '#ff7043' }} />
+                    <Typography variant="h6" sx={{ ml: 2 }}>Comprehensive Data</Typography>
+                  </Box>
+                  <Typography variant="body2" sx={{ mt: 1 }}>
+                    Relies on anecdotal evidence.
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+
+            <Grid item xs={12} md={6}>
+              <Card sx={{ height: '100%', backgroundColor: '#b2ebf2', padding: '20px' }}>
+                <CardContent>
+                  <Typography variant="h5" gutterBottom>
+                    ProfSpector
+                  </Typography>
+                  <Box sx={{ mt: 2, display: 'flex', alignItems: 'center' }}>
+                    <Person sx={{ fontSize: 40, color: '#42a5f5' }} />
+                    <Typography variant="h6" sx={{ ml: 2 }}>Ease of Use</Typography>
+                  </Box>
+                  <Typography variant="body2" sx={{ mt: 1 }}>
+                    One-click personalized recommendations.
+                  </Typography>
+
+                  <Box sx={{ mt: 2, display: 'flex', alignItems: 'center' }}>
+                    <CheckCircle sx={{ fontSize: 40, color: '#42a5f5' }} />
+                    <Typography variant="h6" sx={{ ml: 2 }}>Accuracy of Information</Typography>
+                  </Box>
+                  <Typography variant="body2" sx={{ mt: 1 }}>
+                    Data-driven insights using AI and comprehensive reviews.
+                  </Typography>
+
+                  <Box sx={{ mt: 2, display: 'flex', alignItems: 'center' }}>
+                    <Timer sx={{ fontSize: 40, color: '#42a5f5' }} />
+                    <Typography variant="h6" sx={{ ml: 2 }}>Time Efficiency</Typography>
+                  </Box>
+                  <Typography variant="body2" sx={{ mt: 1 }}>
+                    Instant results with minimal effort.
+                  </Typography>
+
+                  <Box sx={{ mt: 2, display: 'flex', alignItems: 'center' }}>
+                    <Person sx={{ fontSize: 40, color: '#42a5f5' }} />
+                    <Typography variant="h6" sx={{ ml: 2 }}>Personalization</Typography>
+                  </Box>
+                  <Typography variant="body2" sx={{ mt: 1 }}>
+                    Tailored to your learning preferences and academic goals.
+                  </Typography>
+
+                  <Box sx={{ mt: 2, display: 'flex', alignItems: 'center' }}>
+                    <DataUsage sx={{ fontSize: 40, color: '#42a5f5' }} />
+                    <Typography variant="h6" sx={{ ml: 2 }}>Comprehensive Data</Typography>
+                  </Box>
+                  <Typography variant="body2" sx={{ mt: 1 }}>
+                    Analyzes extensive data from multiple sources.
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+          </Grid>
+        </Box>
+      </Container>
     </Box>
   );
-}
+};
+
+export default LandingPage;
