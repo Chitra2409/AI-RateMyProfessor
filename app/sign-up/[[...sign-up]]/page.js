@@ -4,7 +4,7 @@ import { SignUp } from "@clerk/nextjs";
 
 export default function Page() {
   return (
-    <div className="signup-container">
+    <div className="signup-container" >
       <div className="header">
         <h1 className="glowing-text">Welcome to Your Academic AI Partner</h1>
         <p>Unlock a smarter way to rate and explore professors with AI.</p>

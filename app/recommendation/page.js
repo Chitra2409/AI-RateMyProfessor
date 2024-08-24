@@ -90,14 +90,12 @@ export default function Home() {
 
   return (
     <Box
-      width="100vw"
-      minHeight="100vh"
       display="flex"
       flexDirection="column"
       justifyContent="center"
       alignItems="center"
       sx={{
-        background: "linear-gradient(135deg, #6dd5fa, #ffffff)",
+        // background: "linear-gradient(135deg, #6dd5fa, #ffffff)",
         padding: { xs: 2, md: 4 },
       }}
     >
@@ -119,10 +117,14 @@ export default function Home() {
         {/* Chat Messages */}
         <Stack
           direction="column"
-          width="500px"
-          height="700px"
-          p={2}
+
           spacing={3}
+          sx={{
+            flexGrow: 1,
+            overflowY: "auto",
+            padding: 2,
+            maxHeight: "100%", 
+          }}
         >
           {messages.map((message, index) => (
             <Box
@@ -176,7 +178,7 @@ export default function Home() {
                 onClick={() => handleSchoolSelection("School of Advanced Engineering")}
                 sx={{ bgcolor: "#0288d1", color: "#fff" }}
               >
-                School of Engineering
+                School of Advanced Engineering
               </Button>
               <Button
                 variant="contained"
@@ -191,6 +193,27 @@ export default function Home() {
                 sx={{ bgcolor: "#0288d1", color: "#fff" }}
               >
                 School of Health Science
+              </Button>
+              <Button
+                variant="contained"
+                onClick={() => handleSchoolSelection("School of Law")}
+                sx={{ bgcolor: "#0288d1", color: "#fff" }}
+              >
+                School of Law
+              </Button>
+              <Button
+                variant="contained"
+                onClick={() => handleSchoolSelection("School of Business")}
+                sx={{ bgcolor: "#0288d1", color: "#fff" }}
+              >
+                School of Business
+              </Button>
+              <Button
+                variant="contained"
+                onClick={() => handleSchoolSelection("School of Liberal Studies")}
+                sx={{ bgcolor: "#0288d1", color: "#fff" }}
+              >
+                School of Liberal Studies
               </Button>
             </Stack>
           )}

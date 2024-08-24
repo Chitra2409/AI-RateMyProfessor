@@ -1,10 +1,15 @@
 import React from 'react';
 import { Box, AppBar, Toolbar, Typography, Button } from '@mui/material';
 import Image from 'next/image';
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 const Navbar = () => {
   return (
-    <AppBar position="static" sx={{ background: "linear-gradient(135deg, #6dd5fa, #ffffff)" }}>
+    <AppBar 
+      position="static" 
+      sx={{ background: "linear-gradient(135deg, #6dd5fa, #ffffff)" }} 
+      className="header"  // Adding the header class here
+    >
       <Toolbar>
         {/* Image Box */}
         <Box sx={{ display: 'flex', alignItems: 'center', mr: 0 }}>
@@ -17,11 +22,16 @@ const Navbar = () => {
           />
         </Box>
         {/* Typography and Buttons */}
-        <Typography variant="h6" sx={{ flexGrow: 1 }}>
+        <Typography variant="h6" sx={{ flexGrow: 1, textAlign:'left', color:"#1C3B74", fontWeight:'bold' }}>
           ProfSpector
         </Typography>
-        <Button variant="contained" color="primary" sx={{ mr: 2 }}>Login</Button>
-        <Button variant="contained" color="primary">Signup</Button>
+        <SignedOut>
+          <Button variant="contained" color="primary" href="/sign-in" sx={{ mr: 2 }}>Login</Button>
+          <Button variant="contained" color="primary" href="/sign-up">Signup</Button>
+        </SignedOut>
+        <SignedIn>
+          <UserButton />
+        </SignedIn>
       </Toolbar>
     </AppBar>
   );

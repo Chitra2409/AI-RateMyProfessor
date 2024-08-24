@@ -2,6 +2,7 @@ import React from 'react';
 import { Container, Typography, Button, Box, Grid, Card, CardContent } from '@mui/material';
 import { School, Insights, Timer, CheckCircle, DataUsage, Person } from '@mui/icons-material'; // Material Icons
 import Link from "next/link";
+import Footer from "./components/Footer"
 
 const LandingPage = () => {
   return (
@@ -13,10 +14,13 @@ const LandingPage = () => {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
+        margin:0,
+        padding:0,
+        
       }}
     >
       {/* Hero Section */}
-      <Container maxWidth="md" sx={{ textAlign: 'center', py: 6 }}>
+      <Container maxWidth="md" sx={{ textAlign: 'center', py: 6}}>
         <Typography variant="h2" gutterBottom>
           AI-Driven Professor Recommendation System
         </Typography>
@@ -31,10 +35,10 @@ const LandingPage = () => {
         {/* Features Section */}
         <Grid container spacing={4} sx={{ mt: 6 }}>
           <Grid item xs={12} md={4}>
-            <Card sx={{ height: '100%', backgroundColor: '#f0f4f8', textAlign: 'center', padding: '20px' }}>
+            <Card sx={{ height: '100%',  backgroundColor: '#f0f4f8', textAlign: 'center', padding: '20px' }}>
               <School sx={{ fontSize: 50, color: '#6dd5fa' }} />
               <CardContent>
-                <Typography variant="h5" gutterBottom>
+                <Typography variant="h6" gutterBottom>
                   Personalized Recommendations
                 </Typography>
                 <Typography variant="body1">
@@ -48,7 +52,7 @@ const LandingPage = () => {
             <Card sx={{ height: '100%', backgroundColor: '#f0f4f8', textAlign: 'center', padding: '20px' }}>
               <Insights sx={{ fontSize: 50, color: '#6dd5fa' }} />
               <CardContent>
-                <Typography variant="h5" gutterBottom>
+                <Typography variant="h6" gutterBottom>
                   Advanced AI Integration
                 </Typography>
                 <Typography variant="body1">
@@ -62,7 +66,7 @@ const LandingPage = () => {
             <Card sx={{ height: '100%', backgroundColor: '#f0f4f8', textAlign: 'center', padding: '20px' }}>
               <Timer sx={{ fontSize: 50, color: '#6dd5fa' }} />
               <CardContent>
-                <Typography variant="h5" gutterBottom>
+                <Typography variant="h6" gutterBottom>
                   Real-Time Interaction
                 </Typography>
                 <Typography variant="body1">
@@ -179,8 +183,13 @@ const LandingPage = () => {
             </Grid>
           </Grid>
         </Box>
+        
       </Container>
+      <Footer />
+      
     </Box>
+    
+    
   );
 };
 

@@ -1,16 +1,25 @@
-import { clerkMiddleware,createRouteMatcher } from "@clerk/nextjs/server";
+import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+import { NextResponse } from "next/server";
 
-//my code external 
 export default clerkMiddleware((auth, req) => {
-  if (isProtectedRoute(req)) auth().protect();
+  const session = auth();
+
+  // You can log or use session.userId to check if the user is authenticated
+  console.log(session.userId ? "User is authenticated" : "User is not authenticated");
+
+  // If you need to take specific actions based on authentication, you can do so here.
+  // But, do not enforce authentication or redirect.
+
+  // Continue to the next middleware or the route handler
+  return NextResponse.next();
 });
 
 const isProtectedRoute = createRouteMatcher([
-  // Protect all routes except the sign-in route
+  // You can still define protected routes, but since we are not enforcing auth,
+  // this will be more for logging or conditional logic purposes.
   '/dashboard(.*)', 
   '/'
 ]);
-{/* my code ends */}
 
 export const config = {
   matcher: [
