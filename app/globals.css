@@ -10,3 +10,166 @@
 
 
 
+/* styles/globals.css */
+
+.signup-container,
+.signin-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #6dd5fa, #ffffff);
+  font-family: 'Poppins', sans-serif;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.glowing-text {
+  font-size: 3rem;
+  color: #00014d;
+  text-shadow: 0 0 20px rgba(0, 77, 64, 0.8), 0 0 40px rgba(0, 77, 64, 0.6);
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 0 0 20px rgba(0, 77, 64, 0.8), 0 0 40px rgba(0, 77, 64, 0.6);
+  }
+  to {
+    text-shadow: 0 0 30px rgba(0, 77, 64, 1), 0 0 60px rgba(0, 77, 64, 0.8);
+  }
+}
+
+.header p {
+  color: #00796b;
+  margin-top: 10px;
+}
+
+.signup-content,
+.signin-content {
+  display: flex;
+  width: 100%;
+  max-width: 1200px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  margin-top: 40px;
+  animation: fadeIn 1s ease-out;
+}
+
+.signup-wrapper,
+.signin-wrapper,
+.image-section {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  position: relative;
+}
+
+.signup-wrapper,
+.signin-wrapper {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.image-section {
+  background: rgba(0, 173, 181, 0.1);
+}
+
+.image-section img {
+  width: 100%;
+  height: auto;
+  max-height: 100%;
+  object-fit: cover;
+  border-radius: 15px;
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .signup-content,
+  .signin-content {
+    flex-direction: column;
+  }
+
+  .signup-wrapper,
+  .signin-wrapper,
+  .image-section {
+    padding: 10px;
+  }
+
+  .glowing-text {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .signup-container,
+  .signin-container {
+    padding: 20px;
+  }
+
+  .header {
+    margin-bottom: 20px;
+  }
+
+  .glowing-text {
+    font-size: 1.5rem;
+  }
+
+  .signup-content,
+  .signin-content {
+    max-width: 100%;
+  }
+
+  .signup-wrapper,
+  .signin-wrapper,
+  .image-section {
+    padding: 10px;
+  }
+
+  .image-section img {
+    max-height: 70%;
+  }
+}
+
+
+
+
+
