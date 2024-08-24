@@ -7,12 +7,12 @@ const Navbar = () => {
     <AppBar position="static" sx={{ background: "linear-gradient(135deg, #6dd5fa, #ffffff)" }}>
       <Toolbar>
         {/* Image Box */}
-        <Box sx={{ display: 'flex', alignItems: 'center', mr: 1 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', mr: 0 }}>
           <Image 
-            src="" 
+            src="/robot-removebg-preview.png" 
             alt="Profspector Logo" 
-            width={10} 
-            height={10} 
+            width={50} 
+            height={55} 
             quality={100} // optional: specify image quality
           />
         </Box>

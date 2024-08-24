@@ -173,7 +173,7 @@ export default function Home() {
               </Button>
               <Button
                 variant="contained"
-                onClick={() => handleSchoolSelection("School of Engineering")}
+                onClick={() => handleSchoolSelection("School of Advanced Engineering")}
                 sx={{ bgcolor: "#0288d1", color: "#fff" }}
               >
                 School of Engineering
