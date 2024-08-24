@@ -22,6 +22,7 @@ export default function Home() {
   ]);
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [showSchoolOptions, setShowSchoolOptions] = useState(true); // New state to show school options
   const chatEndRef = useRef(null);
 
   const scrollToBottom = () => {
@@ -31,6 +32,18 @@ export default function Home() {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  const handleSchoolSelection = (school) => {
+    setMessages((messages) => [
+      ...messages,
+      { role: "user", content: school },
+      {
+        role: "assistant",
+        content: `You selected ${school}. How can I assist you with the professors in this school?`,
+      },
+    ]);
+    setShowSchoolOptions(false); // Hide options after selection
+  };
 
   const sendMessage = async () => {
     if (message.trim() === "") return;
@@ -85,7 +98,6 @@ export default function Home() {
       alignItems="center"
       sx={{
         background: "linear-gradient(135deg, #6dd5fa, #ffffff)",
-        // background: "linear-gradient(180deg, #3874cb, white)",
         padding: { xs: 2, md: 4 },
       }}
     >
@@ -109,7 +121,6 @@ export default function Home() {
           direction="column"
           width="500px"
           height="700px"
-          border="2px solid black"
           p={2}
           spacing={3}
         >
@@ -146,6 +157,43 @@ export default function Home() {
               </Fade>
             </Box>
           ))}
+
+          {/* School Options */}
+          {showSchoolOptions && (
+            <Stack direction="column" spacing={2} mt={3}>
+              <Typography variant="body2">
+                Please select the school you want to ask about:
+              </Typography>
+              <Button
+                variant="contained"
+                onClick={() => handleSchoolSelection("School of Computer Science")}
+                sx={{ bgcolor: "#0288d1", color: "#fff" }}
+              >
+                School of Computer Science
+              </Button>
+              <Button
+                variant="contained"
+                onClick={() => handleSchoolSelection("School of Engineering")}
+                sx={{ bgcolor: "#0288d1", color: "#fff" }}
+              >
+                School of Engineering
+              </Button>
+              <Button
+                variant="contained"
+                onClick={() => handleSchoolSelection("School of Design")}
+                sx={{ bgcolor: "#0288d1", color: "#fff" }}
+              >
+                School of Design
+              </Button>
+              <Button
+                variant="contained"
+                onClick={() => handleSchoolSelection("School of Health Sciences")}
+                sx={{ bgcolor: "#0288d1", color: "#fff" }}
+              >
+                School of Health Science
+              </Button>
+            </Stack>
+          )}
           <div ref={chatEndRef} />
         </Stack>
 
@@ -172,6 +220,7 @@ export default function Home() {
               },
               boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
             }}
+            disabled={showSchoolOptions} // Disable input while choosing school
           />
           <Button
             variant="contained"
@@ -187,6 +236,7 @@ export default function Home() {
               },
               boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
             }}
+            disabled={showSchoolOptions} // Disable button while choosing school
           >
             Send
           </Button>

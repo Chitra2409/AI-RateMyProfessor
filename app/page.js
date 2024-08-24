@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Typography, Button, Box, Grid, Card, CardContent } from '@mui/material';
 import { School, Insights, Timer, CheckCircle, DataUsage, Person } from '@mui/icons-material'; // Material Icons
+import Link from "next/link";
 
 const LandingPage = () => {
   return (
@@ -22,9 +23,10 @@ const LandingPage = () => {
         <Typography variant="h6" color="textSecondary" gutterBottom>
           Personalized recommendations to help you find the best professors for your courses.
         </Typography>
-        <Button variant="contained" color="primary" sx={{ mt: 4 }}>
+        <Link href="/recommendation"><Button variant="contained" color="primary" sx={{ mt: 4 }}>
           Get Started
         </Button>
+        </Link>
 
         {/* Features Section */}
         <Grid container spacing={4} sx={{ mt: 6 }}>
