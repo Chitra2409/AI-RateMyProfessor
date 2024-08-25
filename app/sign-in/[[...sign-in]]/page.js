@@ -4,7 +4,7 @@ import { SignIn } from "@clerk/nextjs";
 
 export default function Page() {
   return (
-    <div className="signin-container" style={{ overflow: 'hidden', minHeight: '100vh' }}>
+    <div className="signin-container">
       <div className="header">
         <h1 className="glowing-text">Welcome to Your Academic AI Partner</h1>
         <p>Unlock a smarter way to rate and explore professors with AI.</p>
