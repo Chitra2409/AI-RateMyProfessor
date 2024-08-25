@@ -28,6 +28,7 @@ import {
   Storage,
 } from "@mui/icons-material"; // Material Icons
 import Link from "next/link";
+import ProcessForm from './components/ProcessForm'
 
 const LandingPage = () => {
   return (
@@ -67,6 +68,7 @@ const LandingPage = () => {
           Personalized recommendations to help you find the best professors for
           your courses.
         </Typography>
+        <Box sx={{display:'flex', alignContent:'center', gap:'15px' }}>
         <Link href="/recommendation">
           <Button
             variant="contained"
@@ -92,6 +94,29 @@ const LandingPage = () => {
             Get Started
           </Button>
         </Link>
+        <Link href="/AddProfessor">
+            <Button 
+            variant="contained"
+            color="primary"
+            sx={{
+              mt: 4,
+              background: "linear-gradient(135deg, #62cff4, #02386E)",
+              fontSize: "1.1rem",
+              color: "#fff",
+              paddingX: 3,
+              paddingY: 1.5,
+              borderRadius: 4,
+              textTransform: "none",
+              boxShadow: "0px 6px 12px rgba(0, 0, 0, 0.2)",
+              transition:
+                "transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out",
+              "&:hover": {
+                transform: "scale(1.02)", // Slightly scale up on hover
+                boxShadow: "0px 8px 16px rgba(0, 0, 0, 0.3)",
+              },
+            }}>Add Professor</Button>
+          </Link>
+          </Box>
       </Container>
 
       {/* Features Section */}
