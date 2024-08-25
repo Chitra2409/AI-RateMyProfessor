@@ -1,6 +1,8 @@
 import React from 'react';
+import Link from 'next/link'
 import { Container, Typography, Button, Box, Grid, Card, CardContent } from '@mui/material';
 import { School, Insights, Timer, CheckCircle, DataUsage, Person } from '@mui/icons-material'; // Material Icons
+import ProcessForm from './components/ProcessForm'
 
 const LandingPage = () => {
   return (
@@ -14,6 +16,8 @@ const LandingPage = () => {
         alignItems: 'center',
       }}
     >
+
+      {/* <ProcessForm/> */}
       {/* Hero Section */}
       <Container maxWidth="md" sx={{ textAlign: 'center', py: 6 }}>
         <Typography variant="h2" gutterBottom>
@@ -22,10 +26,14 @@ const LandingPage = () => {
         <Typography variant="h6" color="textSecondary" gutterBottom>
           Personalized recommendations to help you find the best professors for your courses.
         </Typography>
-        <Button variant="contained" color="primary" sx={{ mt: 4 }}>
-          Get Started
-        </Button>
-
+        <Box spacing={2}>
+          <Button variant="contained" color="primary" sx={{ mt: 4 , mr:4}}>
+            Get Started
+          </Button>
+          <Link href="/AddProfessor">
+            <Button variant="contained" color="primary" sx={{ mt: 4 }}>Add Professor</Button>
+          </Link>
+        </Box>
         {/* Features Section */}
         <Grid container spacing={4} sx={{ mt: 6 }}>
           <Grid item xs={12} md={4}>
@@ -178,6 +186,8 @@ const LandingPage = () => {
           </Grid>
         </Box>
       </Container>
+
+      {/* <ProcessForm/> */}
     </Box>
   );
 };
