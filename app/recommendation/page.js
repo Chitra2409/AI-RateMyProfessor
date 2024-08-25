@@ -14,7 +14,6 @@ import SendIcon from "@mui/icons-material/Send";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
-
 export default function Home() {
   const [messages, setMessages] = useState([
     {
@@ -25,7 +24,7 @@ export default function Home() {
   ]);
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [showSchoolOptions, setShowSchoolOptions] = useState(true); // New state to show school options
+  const [showSchoolOptions, setShowSchoolOptions] = useState(false); // New state to show school options
   const chatEndRef = useRef(null);
 
   const scrollToBottom = () => {
@@ -346,7 +345,7 @@ export default function Home() {
               color: "#fff",
               paddingX: 3,
               borderRadius: 4,
-              height:"40px",
+              height: "40px",
               textTransform: "none",
               transition:
                 "transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out",
