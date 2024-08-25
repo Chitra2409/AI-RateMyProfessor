@@ -36,6 +36,20 @@ const ProcessForm = () => {
                 // Handle successful response here
                 // close the modal:
                 handleClose();
+                setRecord({
+                    name: '',
+                    designation: '',
+                    profile_image: '',
+                    department: '',
+                    profile_summary: '',
+                    work_experience: '',
+                    research_interests: '',
+                    teaching_philosophy: '',
+                    courses_taught: '',
+                    awards_and_grants: '',
+                    scholarly_activities: '',
+                    contact: ''
+                })
             } else {
                 // Handle other response statuses (e.g., error handling)
                 console.error('Error adding professor:', response.statusText);
