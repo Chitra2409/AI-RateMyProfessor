@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Exo+2:ital,wght@0,100..900;1,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: "Montserrat", sans-serif !important;
+
+}
+html, body {
+  /* overflow: hidden; */
+  margin: 0; /* Remove any default margin */
+  padding: 0; /* Remove any default padding */
+  height: 100%;
+  /* background: linear-gradient(135deg, #6dd5fa, #ffffff); Gradient background */
+  position: relative; /* Necessary for pseudo-element positioning */
+}
+
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('/background.png'); /* Path to your background image */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center; /* Center the image */
+  opacity: 0.3; /* Adjust the opacity (0.1 to 1) */
+  z-index: -1; /* Ensure the background is behind all other content */
+}
+
+
+
