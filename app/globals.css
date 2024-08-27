@@ -1,0 +1,152 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Exo+2:ital,wght@0,100..900;1,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: "Montserrat", sans-serif !important;
+}
+
+html, body {
+  margin: 0; /* Remove any default margin */
+  padding: 0; /* Remove any default padding */
+  height: 100%;
+  /* background: linear-gradient(135deg, #6dd5fa, #ffffff); Gradient background */
+  position: relative; /* Necessary for pseudo-element positioning */
+}
+
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('/background.png'); /* Path to your background image */
+  background-size: cover; /* Ensure the entire image is visible */
+  background-repeat: no-repeat;
+  background-position: center center; /* Center the image */
+  opacity: 0.4; /* Adjust the opacity (0.1 to 1) */
+  z-index: -1; /* Ensure the background is behind all other content */
+}
+
+
+/* styles/globals.css */
+
+.signup-container,
+.signin-container {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
+  height: 'calc(100vh - 64px)';
+  background: transparent; /* Remove background color to avoid white border effect */
+  font-family: 'Poppins', sans-serif;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.glowing-text {
+  font-size: 2.5rem;
+  color: #00014d;
+}
+
+.header p {
+  color: #00796b;
+  margin-top: 10px;
+}
+
+/* Adjusted sign-in box size */
+.signup-content,
+.signin-content {
+  display: flex;
+  width: 100%;
+  max-width: 900px; /* Adjusted max width to make the inner box smaller */
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  margin-top: 5px;
+  animation: fadeIn 1s ease-out;
+}
+
+.signup-wrapper,
+.signin-wrapper,
+.image-section {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  position: relative;
+}
+
+.signup-wrapper,
+.signin-wrapper {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.image-section {
+  background: rgba(0, 173, 181, 0.1);
+}
+
+.image-section img {
+  width: 80%; /* Adjusted image width to fit the smaller box */
+  height: auto;
+  max-height: 80%;
+  object-fit: cover;
+  border-radius: 15px;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .signup-content,
+  .signin-content {
+    flex-direction: column;
+    max-width: 100%; /* Ensure it adapts to smaller screens */
+  }
+
+  .signup-wrapper,
+  .signin-wrapper,
+  .image-section {
+    padding: 10px;
+  }
+
+  .glowing-text {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .signup-container,
+  .signin-container {
+    padding: 20px;
+  }
+
+  .header {
+    margin-bottom: 20px;
+  }
+
+  .glowing-text {
+    font-size: 1.5rem;
+  }
+
+  .signup-content,
+  .signin-content {
+    max-width: 100%; /* Ensure it adapts to smaller screens */
+  }
+
+  .signup-wrapper,
+  .signin-wrapper,
+  .image-section {
+    padding: 10px;
+  }
+
+  .image-section img {
+    max-height: 70%;
+  }
+}
