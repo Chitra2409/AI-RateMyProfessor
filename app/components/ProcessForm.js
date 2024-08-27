@@ -1,6 +1,6 @@
 'use client'
-import React, { useState } from 'react';
-import { Box, Button, Fade, Stack, TextField, Typography, Modal } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { Box, Button, Fade, Stack, TextField, Typography, Modal, Select, MenuItem, InputLabel } from '@mui/material';
 
 const ProcessForm = () => {
     const [open, setOpen] = useState(false);
@@ -19,6 +19,19 @@ const ProcessForm = () => {
         scholarly_activities: '',
         contact: ''
     });
+
+    const [errorMessage, setErrorMessage] = React.useState("");
+
+    useEffect(() => {
+        // Set errorMessage only if email doesn't contain @
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(record.contact)) {
+            setErrorMessage("Invalid email address");
+        } else {
+            setErrorMessage("");
+        }
+
+    }, [record.contact, errorMessage]);
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -49,9 +62,9 @@ const ProcessForm = () => {
                 console.error('Error adding professor:', response.statusText);
             }
         })
-        .catch(error => {
-            console.error('Network error:', error);
-        });
+            .catch(error => {
+                console.error('Network error:', error);
+            });
     }
 
     return (
@@ -73,17 +86,37 @@ const ProcessForm = () => {
                             transform: 'translate(-50%, -50%)',
                             backgroundColor: 'white',
                             overflow: 'hidden',
-                            
+
                         }}
                     >
                         <Typography variant="h5" sx={{ fontWeight: 600, background: 'linear-gradient(135deg, #6dd5fa, #ffffff)', width: '100%', padding: 2, textAlign: 'center', mb: 4 }}>Add a new professor</Typography>
                         <Stack direction="row" sx={{ display: 'flex', gap: 4 }}>
                             <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'start', alignItems: 'center' }}>
                                 <TextField label="Name" variant="outlined" sx={{ mb: 2, minWidth: '400px' }} value={record.name} onChange={(e) => setRecord({ ...record, name: e.target.value })} />
-                                <TextField label="Email" variant="outlined" sx={{ mb: 2, minWidth: '400px' }} value={record.contact} onChange={(e) => setRecord({ ...record, contact: e.target.value })} />
+                                <TextField label="Email" variant="outlined" type='email'
+                                    error={errorMessage}
+                                    id="outlined-error-helper-text"
+                                    label="Error"
+                                    defaultValue=""
+                                    helperText={errorMessage} sx={{ mb: 2, minWidth: '400px' }} value={record.contact} onChange={(e) => setRecord({ ...record, contact: e.target.value })} />
                                 <TextField label="Designation" variant="outlined" sx={{ mb: 2, minWidth: '400px' }} value={record.designation} onChange={(e) => setRecord({ ...record, designation: e.target.value })} />
                                 <TextField label="Profile image" variant="outlined" sx={{ mb: 2, minWidth: '400px' }} value={record.profile_image} onChange={(e) => setRecord({ ...record, profile_image: e.target.value })} />
-                                <TextField label="Department" variant="outlined" sx={{ mb: 2, minWidth: '400px' }} value={record.department} onChange={(e) => setRecord({ ...record, department: e.target.value })} />
+                                <TextField
+                                    sx={{ mb: 2, minWidth: '400px', color: 'primary' }}
+                                    value={record.department}
+                                    label="Department"
+                                    select
+                                    onChange={(e) => setRecord({ ...record, department: e.target.value })}
+                                >
+
+                                    <MenuItem key={1} value='School of Computer Science'>School of Computer Science</MenuItem>
+                                    <MenuItem key={2} value='School of Law'>School of Law</MenuItem>
+                                    <MenuItem key={3} value='School of Liberal Studies'>School of Liberal Studies</MenuItem>
+                                    <MenuItem key={4} value='School of Design'>School of Design</MenuItem>
+                                    <MenuItem key={5} value='School of Business'>School of Business</MenuItem>
+                                    <MenuItem key={6} value='School of Advanced Engineering'>School of Advanced Engineering</MenuItem>
+                                    <MenuItem key={7} value='School of Health Science'>School of Health Science</MenuItem>
+                                </TextField>
                                 <TextField label="Profile summary" variant="outlined" sx={{ mb: 2, minWidth: '400px' }} value={record.profile_summary} onChange={(e) => setRecord({ ...record, profile_summary: e.target.value })} />
                             </Box>
                             <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
@@ -96,22 +129,22 @@ const ProcessForm = () => {
                             </Box>
                         </Stack>
                         <Button type="submit" variant="contained" color="primary" sx={{
-              mt: 4,
-              background: "linear-gradient(135deg, #62cff4, #02386E)",
-              fontSize: "1.1rem",
-              color: "#fff",
-              paddingX: 3,
-              paddingY: 1.5,
-              borderRadius: 4,
-              textTransform: "none",
-              boxShadow: "0px 6px 12px rgba(0, 0, 0, 0.2)",
-              transition:
-                "transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out",
-              "&:hover": {
-                transform: "scale(1.02)", // Slightly scale up on hover
-                boxShadow: "0px 8px 16px rgba(0, 0, 0, 0.3)",
-              },
-            }} onClick={handleSubmit}>
+                            mt: 4,
+                            background: "linear-gradient(135deg, #62cff4, #02386E)",
+                            fontSize: "1.1rem",
+                            color: "#fff",
+                            paddingX: 3,
+                            paddingY: 1.5,
+                            borderRadius: 4,
+                            textTransform: "none",
+                            boxShadow: "0px 6px 12px rgba(0, 0, 0, 0.2)",
+                            transition:
+                                "transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out",
+                            "&:hover": {
+                                transform: "scale(1.02)", // Slightly scale up on hover
+                                boxShadow: "0px 8px 16px rgba(0, 0, 0, 0.3)",
+                            },
+                        }} onClick={handleSubmit}>
                             Submit
                         </Button>
                     </Box>
@@ -120,23 +153,23 @@ const ProcessForm = () => {
             {
                 !open && (
                     <Button variant="contained" color="primary" onClick={handleOpen}
-                    sx={{
-              mt: 4,
-              background: "linear-gradient(135deg, #62cff4, #02386E)",
-              fontSize: "1.1rem",
-              color: "#fff",
-              paddingX: 3,
-              paddingY: 1.5,
-              borderRadius: 4,
-              textTransform: "none",
-              boxShadow: "0px 6px 12px rgba(0, 0, 0, 0.2)",
-              transition:
-                "transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out",
-              "&:hover": {
-                transform: "scale(1.02)", // Slightly scale up on hover
-                boxShadow: "0px 8px 16px rgba(0, 0, 0, 0.3)",
-              },
-            }}>
+                        sx={{
+                            mt: 4,
+                            background: "linear-gradient(135deg, #62cff4, #02386E)",
+                            fontSize: "1.1rem",
+                            color: "#fff",
+                            paddingX: 3,
+                            paddingY: 1.5,
+                            borderRadius: 4,
+                            textTransform: "none",
+                            boxShadow: "0px 6px 12px rgba(0, 0, 0, 0.2)",
+                            transition:
+                                "transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out",
+                            "&:hover": {
+                                transform: "scale(1.02)", // Slightly scale up on hover
+                                boxShadow: "0px 8px 16px rgba(0, 0, 0, 0.3)",
+                            },
+                        }}>
                         Add professor
                     </Button>
                 )
