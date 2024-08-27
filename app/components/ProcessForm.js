@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Button,
@@ -8,9 +8,10 @@ import {
   TextField,
   Typography,
   Modal,
-  IconButton,
+  Select,
+  MenuItem,
+  InputLabel,
 } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
 
 const ProcessForm = () => {
   const [open, setOpen] = useState(false);
@@ -29,6 +30,18 @@ const ProcessForm = () => {
     scholarly_activities: "",
     contact: "",
   });
+
+  const [errorMessage, setErrorMessage] = useState(null);
+
+  useEffect(() => {
+    // Set errorMessage only if email doesn't contain @
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(record.contact)) {
+      setErrorMessage("Invalid email address");
+    } else {
+      setErrorMessage("");
+    }
+  }, [record.contact, errorMessage]);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -70,50 +83,40 @@ const ProcessForm = () => {
       display="flex"
       justifyContent="center"
       alignItems="center"
-      sx={{
-
-        height:"calc(100vh - 64px)"
-      }}
+      height="100vh"
     >
       <Modal open={open} onClose={handleClose}>
         <Fade in={open}>
           <Box
             sx={{
-              minWidth: "60%", // Reduced the width
-              maxWidth: "600px", // Added max-width for responsiveness
-              p: 3, // Increased padding for better spacing
+              minWidth: "60%",
+              p: 2,
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
               alignItems: "center",
-              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+              boxShadow: "0 4px 8px #333",
               position: "absolute",
               left: "50%",
               top: "50%",
               transform: "translate(-50%, -50%)",
               backgroundColor: "white",
               overflow: "hidden",
-              borderRadius: 2,
-              position: "relative",
             }}
           >
-            {/* Close button */}
-            <IconButton
-              onClick={handleClose}
+            <Typography
+              variant="h5"
               sx={{
-                position: "absolute",
-                top: 12,
-                right: 12,
-                color: "#666",
+                fontWeight: 600,
+                background: "linear-gradient(135deg, #6dd5fa, #ffffff)",
+                width: "100%",
+                padding: 2,
+                textAlign: "center",
+                mb: 4,
               }}
             >
-              <CloseIcon />
-            </IconButton>
-
-            <Typography variant="h5" sx={{ fontWeight: 600, mb: 4 }}>
-              Add a New Professor
+              Add a new professor
             </Typography>
-
             <Stack direction="row" sx={{ display: "flex", gap: 4 }}>
               <Box
                 sx={{
@@ -135,6 +138,11 @@ const ProcessForm = () => {
                 <TextField
                   label="Email"
                   variant="outlined"
+                  type="email"
+                  error={errorMessage && record.contact !== ""}
+                  id="outlined-error-helper-text"
+                  defaultValue=""
+                  helperText={errorMessage}
                   sx={{ mb: 2, minWidth: "400px" }}
                   value={record.contact}
                   onChange={(e) =>
@@ -160,14 +168,36 @@ const ProcessForm = () => {
                   }
                 />
                 <TextField
-                  label="Department"
-                  variant="outlined"
-                  sx={{ mb: 2, minWidth: "400px" }}
+                  sx={{ mb: 2, minWidth: "400px", color: "primary" }}
                   value={record.department}
+                  label="Department"
+                  select
                   onChange={(e) =>
                     setRecord({ ...record, department: e.target.value })
                   }
-                />
+                >
+                  <MenuItem key={1} value="School of Computer Science">
+                    School of Computer Science
+                  </MenuItem>
+                  <MenuItem key={2} value="School of Law">
+                    School of Law
+                  </MenuItem>
+                  <MenuItem key={3} value="School of Liberal Studies">
+                    School of Liberal Studies
+                  </MenuItem>
+                  <MenuItem key={4} value="School of Design">
+                    School of Design
+                  </MenuItem>
+                  <MenuItem key={5} value="School of Business">
+                    School of Business
+                  </MenuItem>
+                  <MenuItem key={6} value="School of Advanced Engineering">
+                    School of Advanced Engineering
+                  </MenuItem>
+                  <MenuItem key={7} value="School of Health Science">
+                    School of Health Science
+                  </MenuItem>
+                </TextField>
                 <TextField
                   label="Profile summary"
                   variant="outlined"
@@ -248,12 +278,10 @@ const ProcessForm = () => {
                 />
               </Box>
             </Stack>
-
             <Button
               type="submit"
               variant="contained"
               color="primary"
-              onClick={handleSubmit}
               sx={{
                 mt: 4,
                 background: "linear-gradient(135deg, #62cff4, #02386E)",
@@ -271,6 +299,7 @@ const ProcessForm = () => {
                   boxShadow: "0px 8px 16px rgba(0, 0, 0, 0.3)",
                 },
               }}
+              onClick={handleSubmit}
             >
               Submit
             </Button>
@@ -300,10 +329,11 @@ const ProcessForm = () => {
             },
           }}
         >
-          Add Professor
+          Add professor
         </Button>
       )}
     </Box>
   );
 };
+
 export default ProcessForm;
