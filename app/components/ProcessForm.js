@@ -20,7 +20,7 @@ const ProcessForm = () => {
         contact: ''
     });
 
-    const [errorMessage, setErrorMessage] = React.useState("");
+    const [errorMessage, setErrorMessage] = useState(null);
 
     useEffect(() => {
         // Set errorMessage only if email doesn't contain @
@@ -93,10 +93,11 @@ const ProcessForm = () => {
                         <Stack direction="row" sx={{ display: 'flex', gap: 4 }}>
                             <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'start', alignItems: 'center' }}>
                                 <TextField label="Name" variant="outlined" sx={{ mb: 2, minWidth: '400px' }} value={record.name} onChange={(e) => setRecord({ ...record, name: e.target.value })} />
-                                <TextField label="Email" variant="outlined" type='email'
-                                    error={errorMessage}
+                                <TextField
+                                    label="Email" 
+                                    variant="outlined" type='email'
+                                    error={errorMessage && record.contact !== ''}
                                     id="outlined-error-helper-text"
-                                    label="Error"
                                     defaultValue=""
                                     helperText={errorMessage} sx={{ mb: 2, minWidth: '400px' }} value={record.contact} onChange={(e) => setRecord({ ...record, contact: e.target.value })} />
                                 <TextField label="Designation" variant="outlined" sx={{ mb: 2, minWidth: '400px' }} value={record.designation} onChange={(e) => setRecord({ ...record, designation: e.target.value })} />
