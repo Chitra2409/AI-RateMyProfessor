@@ -291,14 +291,29 @@ export default function Home() {
             onClick={sendMessage}
             endIcon={<SendIcon />}
             sx={{
-              bgcolor: "#0288d1",
+              background: "linear-gradient(135deg, #42a5f5, #0288d1)",
               color: "#fff",
               paddingX: 3,
               borderRadius: 4,
+              height: "40px",
+              textTransform: "none",
+              transition:
+                "transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out",
+              boxShadow: "0px 6px 12px rgba(0, 0, 0, 0.2)",
+              boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+
               "&:hover": {
-                bgcolor: "#0277bd",
+                transform: "scale(1.05)", // Slightly scale up on hover
+                background: "linear-gradient(135deg, #1e88e5, #0277bd)",
+                boxShadow: "0px 8px 16px rgba(0, 0, 0, 0.3)",
+                boxShadow: "0px 6px 12px rgba(0, 0, 0, 0.2)",
               },
-              boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
+              "& .MuiButton-endIcon": {
+                transition: "transform 0.3s ease-in-out", // Animate the icon
+              },
+              "&:hover .MuiButton-endIcon": {
+                transform: "translateX(5px)", // Move the icon slightly to the right on hover
+              },
             }}
             disabled={showSchoolOptions} // Disable button while choosing school
           >

@@ -1,4 +1,5 @@
-import React from "react";
+'use client'
+import React,{ useState } from "react";
 import {
   Container,
   Typography,
@@ -30,18 +31,48 @@ import {
 import Link from "next/link";
 import ProcessForm from "./components/ProcessForm";
 // import { useUser } from "@clerk/nextjs";
-import { auth, currentUser } from "@clerk/nextjs/server";
+// import { auth, currentUser } from "@clerk/nextjs/server";
+import { useUser } from "@clerk/nextjs";
+import FeedbackModal from "./components/FeedbackModal";
 
-const LandingPage = async () => {
-  // const { isLoaded, isSignedIn, user } = useUser(); // Get the user details from Clerk
+const LandingPage = () => {
+  const { isLoaded, isSignedIn, user } = useUser();
   const adminEmails = process.env.NEXT_PUBLIC_ADMIN_EMAILS?.split(",") || [];
+  // const isAdmin =
+  //   user && adminEmails.includes(user.emailAddresses[0].emailAddress);
+  const isAdmin = false
+  // const isAdmin = true 
+ 
+    const [openFeedbackModal, setOpenFeedbackModal] = useState(false);
+    const [openProcessModal, setOpenProcessModal] = useState(false); // State to control ProcessForm modal
 
-  const { userId } = auth();
-  const user = await currentUser();
-  const isAdmin =
-  user && adminEmails.includes(user.emailAddresses[0].emailAddress);
+    const [rating, setRating] = useState(0);
+    const [feedback, setFeedback] = useState("");
+    const [school, setSchool] = useState("");
+    const [professor, setProfessor] = useState("");
 
-  // console.log(adminEmails.includes(user));
+    const schoolsList = [
+      "School of Engineering",
+      "School of Arts",
+      "School of Science",
+    ];
+    const professorsList = ["Dr. Smith", "Prof. Johnson", "Dr. Lee"];
+
+    const handleOpenFeedbackModal = () => setOpenFeedbackModal(true);
+    const handleCloseFeedbackModal = () => setOpenFeedbackModal(false);
+    const handleSubmitFeedback = () => {
+      console.log("Feedback Submitted: ", {
+        school,
+        professor,
+        rating,
+        feedback,
+      });
+      handleCloseFeedbackModal();
+    };
+
+    const handleOpenProcessModal = () => setOpenProcessModal(true);
+    const handleCloseProcessModal = () => setOpenProcessModal(false);
+
 
   return (
     <Box
@@ -69,7 +100,6 @@ const LandingPage = async () => {
           alignItems: "center",
           flexDirection: "column",
           m: 0,
-
         }}
       >
         <Typography
@@ -110,36 +140,72 @@ const LandingPage = async () => {
             </Button>
           </Link>
 
-          {isAdmin && (
-            <Link href="/AddProfessor">
-              <Button
-                variant="contained"
-                color="primary"
-                sx={{
-                  mt: 4,
-                  background: "linear-gradient(135deg, #62cff4, #02386E)",
-                  fontSize: "1.1rem",
+          {isAdmin ? (
+            // <Link href="/AddProfessor">
+            <Button
+              variant="contained"
+              color="primary"
+              sx={{
+                mt: 4,
+                background: "linear-gradient(135deg, #62cff4, #02386E)",
+                fontSize: "1.1rem",
+                color: "#fff",
+                paddingX: 3,
+                paddingY: 1.5,
+                borderRadius: 4,
+                textTransform: "none",
+                boxShadow: "0px 6px 12px rgba(0, 0, 0, 0.2)",
+                transition:
+                  "transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out",
+                "&:hover": {
+                  transform: "scale(1.02)",
+                  boxShadow: "0px 8px 16px rgba(0, 0, 0, 0.3)",
+                },
+              }}
+              onClick={handleOpenProcessModal} // Open ProcessForm modal
+            >
+              Add Professor
+            </Button>
+          ) : (
+            // </Link>
+            <Button
+              variant="outlined"
+              color="primary"
+              sx={{
+                mt: 4,
+                fontSize: "1.1rem",
+                paddingX: 3,
+                paddingY: 1.5,
+                borderRadius: 4,
+                textTransform: "none",
+                "&:hover": {
+                  backgroundColor: "#02386E",
                   color: "#fff",
-                  paddingX: 3,
-                  paddingY: 1.5,
-                  borderRadius: 4,
-                  textTransform: "none",
-                  boxShadow: "0px 6px 12px rgba(0, 0, 0, 0.2)",
-                  transition:
-                    "transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out",
-                  "&:hover": {
-                    transform: "scale(1.02)", // Slightly scale up on hover
-                    boxShadow: "0px 8px 16px rgba(0, 0, 0, 0.3)",
-                  },
-                }}
-              >
-                Add Professor
-              </Button>
-            </Link>
+                },
+              }}
+              onClick={handleOpenFeedbackModal}
+            >
+              Give Feedback
+            </Button>
           )}
         </Box>
       </Container>
-
+      <FeedbackModal
+        open={openFeedbackModal}
+        onClose={handleCloseFeedbackModal}
+        rating={rating}
+        setRating={setRating}
+        feedback={feedback}
+        setFeedback={setFeedback}
+        handleSubmit={handleSubmitFeedback}
+        school={school}
+        setSchool={setSchool}
+        professor={professor}
+        setProfessor={setProfessor}
+        schoolsList={schoolsList}
+        professorsList={professorsList}
+      />
+      <ProcessForm open={openProcessModal} onClose={handleCloseProcessModal} />
       {/* Features Section */}
       <Container
         maxWidth={false}
@@ -183,7 +249,6 @@ const LandingPage = async () => {
                   textAlign: "center",
                   padding: "20px",
                 }}
-
               >
                 <TouchApp sx={{ fontSize: 50, color: "#6dd5fa" }} />
                 <CardContent>
