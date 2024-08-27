@@ -38,10 +38,8 @@ import FeedbackModal from "./components/FeedbackModal";
 const LandingPage = () => {
   const { isLoaded, isSignedIn, user } = useUser();
   const adminEmails = process.env.NEXT_PUBLIC_ADMIN_EMAILS?.split(",") || [];
-  // const isAdmin =
-  //   user && adminEmails.includes(user.emailAddresses[0].emailAddress);
-  const isAdmin = false
-  // const isAdmin = true 
+  const isAdmin =
+    user && adminEmails.includes(user.emailAddresses[0].emailAddress);
  
     const [openFeedbackModal, setOpenFeedbackModal] = useState(false);
     const [openProcessModal, setOpenProcessModal] = useState(false); // State to control ProcessForm modal
