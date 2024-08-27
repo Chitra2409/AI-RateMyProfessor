@@ -11,8 +11,7 @@ import {
   Fade,
 } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
-import ReactMarkdown from 'react-markdown';
-
+import ReactMarkdown from "react-markdown";
 
 export default function Home() {
   const [messages, setMessages] = useState([
@@ -118,113 +117,149 @@ export default function Home() {
       >
         {/* Chat Messages */}
         <Stack
-  direction="column"
-  spacing={3}
-  sx={{
-    flexGrow: 1,
-    overflowY: "auto",
-    padding: 2,
-    maxHeight: "100%", 
-  }}
->
-  {messages.map((message, index) => (
-    <Box
-      key={index}
-      display="flex"
-      justifyContent={
-        message.role === "assistant" ? "flex-start" : "flex-end"
-      }
-    >
-      <Fade in>
-        <Box
-          component={Paper}
-          elevation={2}
+          direction="column"
+          spacing={3}
           sx={{
-            maxWidth: "75%",
+            flexGrow: 1,
+            overflowY: "auto",
             padding: 2,
-            px:3,
-            borderRadius: 4,
-            bgcolor:
-              message.role === "assistant" ? "#e1f5fe" : "#bbdefb",
-            color: "#333",
-            wordWrap: "break-word",
-            boxShadow:
-              message.role === "assistant"
-                ? ""
-                : "0px 2px 10px rgba(0, 0, 0, 0.1)",
+            maxHeight: "100%",
           }}
         >
-          <ReactMarkdown
-            children={message.content}
-            components={{
-              p: ({ node, ...props }) => <Typography variant="body2" sx={{ fontSize: "16px" }} {...props} />,
-            }}
-          />
-        </Box>
-      </Fade>
-    </Box>
-  ))}
+          {messages.map((message, index) => {
+            const emailRegex = /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/gi;
+            const emails = message.content.match(emailRegex) || [];
 
-  {/* School Options */}
-  {showSchoolOptions && (
-    <Stack direction="column" spacing={2} mt={3}>
-      <Typography variant="body2">
-        Please select the school you want to ask about:
-      </Typography>
-      <Button
-        variant="contained"
-        onClick={() => handleSchoolSelection("School of Computer Science")}
-        sx={{ bgcolor: "#0288d1", color: "#fff" }}
-      >
-        School of Computer Science
-      </Button>
-      <Button
-        variant="contained"
-        onClick={() => handleSchoolSelection("School of Advanced Engineering")}
-        sx={{ bgcolor: "#0288d1", color: "#fff" }}
-      >
-        School of Advanced Engineering
-      </Button>
-      <Button
-        variant="contained"
-        onClick={() => handleSchoolSelection("School of Design")}
-        sx={{ bgcolor: "#0288d1", color: "#fff" }}
-      >
-        School of Design
-      </Button>
-      <Button
-        variant="contained"
-        onClick={() => handleSchoolSelection("School of Health Sciences")}
-        sx={{ bgcolor: "#0288d1", color: "#fff" }}
-      >
-        School of Health Science
-      </Button>
-      <Button
-        variant="contained"
-        onClick={() => handleSchoolSelection("School of Law")}
-        sx={{ bgcolor: "#0288d1", color: "#fff" }}
-      >
-        School of Law
-      </Button>
-      <Button
-        variant="contained"
-        onClick={() => handleSchoolSelection("School of Business")}
-        sx={{ bgcolor: "#0288d1", color: "#fff" }}
-      >
-        School of Business
-      </Button>
-      <Button
-        variant="contained"
-        onClick={() => handleSchoolSelection("School of Liberal Studies")}
-        sx={{ bgcolor: "#0288d1", color: "#fff" }}
-      >
-        School of Liberal Studies
-      </Button>
-    </Stack>
-  )}
-  <div ref={chatEndRef} />
-</Stack>
+            return (
+              <Box
+                key={index}
+                display="flex"
+                justifyContent={
+                  message.role === "assistant" ? "flex-start" : "flex-end"
+                }
+              >
+                <Fade in>
+                  <Box
+                    component={Paper}
+                    elevation={2}
+                    sx={{
+                      maxWidth: "75%",
+                      padding: 2,
+                      px: 3,
+                      borderRadius: 4,
+                      bgcolor:
+                        message.role === "assistant" ? "#e1f5fe" : "#bbdefb",
+                      color: "#333",
+                      wordWrap: "break-word",
+                      boxShadow:
+                        message.role === "assistant"
+                          ? ""
+                          : "0px 2px 10px rgba(0, 0, 0, 0.1)",
+                    }}
+                  >
+                    <ReactMarkdown
+                      children={message.content}
+                      components={{
+                        p: ({ node, ...props }) => (
+                          <Typography
+                            variant="body2"
+                            sx={{
+                              fontSize: "16px",
+                            }}
+                            {...props}
+                          />
+                        ),
+                      }}
+                    />
 
+                    {emails.length > 0 && (
+                      <Box mt={2}>
+                        {emails.map((email, idx) => (
+                          <Button
+                            key={idx}
+                            href={`mailto:${email}`}
+                            variant="contained"
+                            color="primary"
+                            sx={{ mr: 1, mb: 1 }}
+                          >
+                            Email {email}
+                          </Button>
+                        ))}
+                      </Box>
+                    )}
+                  </Box>
+                </Fade>
+              </Box>
+            );
+          })}
+
+          {/* School Options */}
+          {showSchoolOptions && (
+            <Stack direction="column" spacing={2} mt={3}>
+              <Typography variant="body2">
+                Please select the school you want to ask about:
+              </Typography>
+              <Button
+                variant="contained"
+                onClick={() =>
+                  handleSchoolSelection("School of Computer Science")
+                }
+                sx={{ bgcolor: "#0288d1", color: "#fff" }}
+              >
+                School of Computer Science
+              </Button>
+              <Button
+                variant="contained"
+                onClick={() =>
+                  handleSchoolSelection("School of Advanced Engineering")
+                }
+                sx={{ bgcolor: "#0288d1", color: "#fff" }}
+              >
+                School of Advanced Engineering
+              </Button>
+              <Button
+                variant="contained"
+                onClick={() => handleSchoolSelection("School of Design")}
+                sx={{ bgcolor: "#0288d1", color: "#fff" }}
+              >
+                School of Design
+              </Button>
+              <Button
+                variant="contained"
+                onClick={() =>
+                  handleSchoolSelection("School of Health Sciences")
+                }
+                sx={{ bgcolor: "#0288d1", color: "#fff" }}
+              >
+                School of Health Science
+              </Button>
+              <Button
+                variant="contained"
+                onClick={() => handleSchoolSelection("School of Law")}
+                sx={{ bgcolor: "#0288d1", color: "#fff" }}
+              >
+                School of Law
+              </Button>
+              <Button
+                variant="contained"
+                onClick={() => handleSchoolSelection("School of Business")}
+                sx={{ bgcolor: "#0288d1", color: "#fff" }}
+              >
+                School of Business
+              </Button>
+              <Button
+                variant="contained"
+                onClick={() =>
+                  handleSchoolSelection("School of Liberal Studies")
+                }
+                sx={{ bgcolor: "#0288d1", color: "#fff" }}
+              >
+                School of Liberal Studies
+              </Button>
+            </Stack>
+          )}
+          <div ref={chatEndRef} />
+        </Stack>
 
         {/* Loading Indicator */}
         {isLoading && (
