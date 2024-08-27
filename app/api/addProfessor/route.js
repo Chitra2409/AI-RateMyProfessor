@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 import { OpenAI } from 'openai'
 
 const pc = new Pinecone({ apiKey: process.env.PINECONE_API_KEY });
-const index = pc.index("test")
+const index = pc.index("rag")
 const client = new OpenAI();
 
 export async function POST(req) {
@@ -11,7 +11,6 @@ export async function POST(req) {
     try {
         // Parse incoming data (assuming it's in JSON formt)
         const record= await req.json()
-
         const response = await client.embeddings.create({
             input: record.name,
             model: "text-embedding-3-small",
@@ -26,8 +25,6 @@ export async function POST(req) {
                     ...record
                 }
             }]
-
-
         const res = await index.upsert(records)
 
         return new NextResponse(res)
