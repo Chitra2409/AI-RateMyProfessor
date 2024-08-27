@@ -2,6 +2,7 @@ import React from "react";
 import { Box, AppBar, Toolbar, Typography, Button } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
+import { SignedIn,SignedOut, UserButton } from "@clerk/nextjs";
 
 const Navbar = () => {
   return (
@@ -29,6 +30,7 @@ const Navbar = () => {
             ProfSpector
           </Link>
         </Typography>
+        <SignedOut>
         <Link href="/sign-in">
           <Button
             variant="contained"
@@ -78,6 +80,20 @@ const Navbar = () => {
             Signup
           </Button>
         </Link>
+        </SignedOut>
+        <SignedIn>
+        <UserButton
+                sx={{
+                  marginLeft: 2,
+                  padding: "4px", // Adding padding to UserButton for consistency
+                  borderRadius: "50%",
+                  ":hover": {
+                    backgroundColor: "#FFD3B6", // Hover effect for user button
+                  },
+                }}
+              />
+
+        </SignedIn>
       </Toolbar>
     </AppBar>
   );
