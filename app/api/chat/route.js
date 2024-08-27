@@ -3,36 +3,31 @@ import { Pinecone } from '@pinecone-database/pinecone'
 import OpenAI from 'openai'
 
 const systemPrompt = `
-You are an AI assistant named "Professor Advisor" that helps university students find the best professors for their courses. Your goal is to provide students with the top 3 professor recommendations based on their specific queries.
+You are an AI-driven professor recommendation assistant. Your job is to provide accurate and relevant information about professors based on user queries. Always ensure to:
 
-You have access to a comprehensive database of professor reviews, which includes information such as the professor's name, the subject they teach, their rating on a scale of 1-5 stars, and a brief written review.
+1. **Provide Only Relevant Information:** Respond only with information directly related to the user's question. Avoid including irrelevant details.
+   
+2. **Accuracy and Relevance:** Use the information available in the database to provide the most accurate and relevant response. If the information requested by the user is not available, ask them to refine their query or provide more details.
 
-When a student asks you a question, you will first analyze their query to determine the key factors they are looking for in a professor, such as subject area, rating, or specific teaching style. You will then search your database of professor reviews and provide the top 3 recommendations that best match the student's criteria.
+3. **Comparison and Ranking:** If the user asks for the top professors or a comparison between professors, use the provided metadata fields such as teaching experience, research interests, awards, and scholarly activities to rank and compare the professors. Return the top-ranked professors based on these criteria.
 
-Your responses should be concise and informative, using the Relevant, Accurate, and Grounded (RAG) framework to ensure the information you provide is useful and trustworthy. Here's how you'll structure your responses:
+4. **School Selection and Professor Validation:**
+   - First, check which school has been selected by the user among the following options: 
+     - School of Computer Science
+     - School of Law
+     - School of Liberal Studies
+     - School of Design
+     - School of Business
+     - School of Advanced Engineering
+     - School of Health Science
+   - Then, search for the professor in that particular department only.
+   - If the professor exists in the selected department, respond to the user's query with the relevant information.
+   - If the professor does not belong to the selected school, inform the user that this professor does not belong to the selected school and provide the name of the correct school the professor belongs to, but **do not provide any other information**.
+   - If the professor is not found in the selected school, ask the user for more information or suggest they select the correct school.
 
-Relevant: Clearly state the 3 most relevant professor recommendations based on the student's query.
-Accurate: Provide accurate details about each recommended professor, including their name, the subject they teach, and their rating.
-Grounded: Back up your recommendations with evidence from the professor review database, quoting or paraphrasing the written reviews to support your choices.
+5. **Data Validation:** If the user's query doesn't match any data in the database, inform them politely and ask for more specific information.
 
-For example, if a student asks "Can you recommend some good professors for an introductory psychology course?", your response might look like this:
-
-Relevant: Based on your query, the top 3 professor recommendations for an introductory psychology course are:
-1. Professor Jessica Lee
-2. Professor Mike Johnson
-3. Professor Olivia Davis
-
-Accurate:
-1. Professor Jessica Lee: Introduction to Psychology, 4 stars
-"Professor Lee is an engaging and enthusiastic lecturer. She does an excellent job of relating the course material to real-world examples and encouraging class discussion."
-2. Professor Mike Johnson: Introduction to Psychology, 3.5 stars
-"Professor Johnson's lectures can be interesting, but he tends to go off on tangents. The textbook is essential for understanding the material, and the grading is heavily based on multiple-choice exams."
-3. Professor Olivia Davis: Principles of Management, 3 stars
-"While Professor Davis is knowledgeable about the subject matter, her teaching style can be a bit dry and monotonous at times."
-
-Grounded: The reviews suggest that Professor Lee and Professor Johnson are the strongest options for an introductory psychology course, with Professor Lee receiving particularly high praise for her engaging teaching style and class discussions.
-
-Please let me know if you have any other questions!
+6. **Handle Inappropriate Requests:** If the user's query is inappropriate or cannot be answered based on the available data, ask them to provide a valid query or more information.
 `
 
 export async function POST(req) {
@@ -57,25 +52,30 @@ export async function POST(req) {
         vector: embedding.data[0].embedding
     })
 
-    let resultString = '\n\nReturned results from vector db (done automatically)'
-    results.matches.forEach((match) => {
-        resultString += `
-        {
-            "name": "${match.metadata.name}",
-            "designation": "${match.metadata.designation}",
-            "profile_image": "${match.metadata.profile_image}",
-            "department": "${match.metadata.department}",
-            "profile_summary": "${match.metadata.profile_summary}",
-            "work_experience": "${match.metadata.work_experience}",
-            "research_interests": "${match.metadata.research_interests}",
-            "teaching_philosophy": "${match.metadata.teaching_philosophy}",
-            "courses_taught": "${match.metadata.courses_taught}",
-            "awards_and_grants": "${match.metadata.awards_and_grants}",
-            "scholarly_activities": "${match.metadata.scholarly_activities}",
-            "contact": "${match.metadata.contact}"
-        }
-        \n\n`
-    })
+    let resultString = ''
+    if (results.matches.length > 0) {
+        resultString += '\n\nReturned results from vector db:'
+        results.matches.forEach((match) => {
+            resultString += `
+            {
+                "name": "${match.metadata.name}",
+                "designation": "${match.metadata.designation}",
+                "profile_image": "${match.metadata.profile_image}",
+                "department": "${match.metadata.department}",
+                "profile_summary": "${match.metadata.profile_summary}",
+                "work_experience": "${match.metadata.work_experience}",
+                "research_interests": "${match.metadata.research_interests}",
+                "teaching_philosophy": "${match.metadata.teaching_philosophy}",
+                "courses_taught": "${match.metadata.courses_taught}",
+                "awards_and_grants": "${match.metadata.awards_and_grants}",
+                "scholarly_activities": "${match.metadata.scholarly_activities}",
+                "contact": "${match.metadata.contact}"
+            }
+            \n\n`
+        })
+    } else {
+        resultString = '\n\nNo matching professors found. Please provide more specific information or check the query.'
+    }
 
     const lastMessage = data[data.length - 1]
     const lastMessageContent = lastMessage.content + resultString
@@ -106,7 +106,6 @@ export async function POST(req) {
             }
             catch (err) {
                 controller.error(err)
-
             } finally {
                 controller.close()
             }
