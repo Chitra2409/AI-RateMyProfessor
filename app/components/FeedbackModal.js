@@ -120,6 +120,23 @@ const FeedbackModal = ({
             </Select>
           </FormControl>
 
+          {/* Feedback */}
+          <TextField
+            label="Your Feedback"
+            multiline
+            rows={5}
+            variant="outlined"
+            value={feedback}
+            onChange={(e) => setFeedback(e.target.value)}
+            fullWidth
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                borderRadius: 3,
+                fontSize: "1rem",
+              },
+            }}
+          />
+
           {/* Rating */}
           <Box
             sx={{
@@ -146,23 +163,6 @@ const FeedbackModal = ({
               }}
             />
           </Box>
-
-          {/* Feedback */}
-          <TextField
-            label="Your Feedback"
-            multiline
-            rows={5}
-            variant="outlined"
-            value={feedback}
-            onChange={(e) => setFeedback(e.target.value)}
-            fullWidth
-            sx={{
-              "& .MuiOutlinedInput-root": {
-                borderRadius: 3,
-                fontSize: "1rem",
-              },
-            }}
-          />
 
           {/* Submit Button */}
           <Button
