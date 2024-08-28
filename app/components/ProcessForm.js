@@ -1,4 +1,3 @@
-"use client";
 import React, { useState } from "react";
 import {
   Box,
@@ -12,7 +11,10 @@ import {
   FormControl,
   InputLabel,
   Select,
+  IconButton,
 } from "@mui/material";
+import CloseIcon from '@mui/icons-material/Close'; // Import the close icon
+
 
 const ProcessForm = ({ open, onClose }) => {
   const [record, setRecord] = useState({
@@ -103,6 +105,18 @@ const ProcessForm = ({ open, onClose }) => {
             overflow: "hidden",
           }}
         >
+          <IconButton
+          aria-label="close"
+          onClick={onClose}
+          sx={{
+            position: 'absolute',
+            right: 8,
+            top: 8,
+            color: (theme) => theme.palette.grey[500],
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
           <Typography
             variant="h4"
             sx={{
@@ -178,7 +192,7 @@ const ProcessForm = ({ open, onClose }) => {
                   },
                 }}
               />
-              <FormControl fullWidth sx={{ mb: 2 }}>
+              <FormControl fullWidth>
                 <InputLabel id="select-department-label">Department</InputLabel>
                 <Select
                   labelId="select-department-label"
@@ -215,8 +229,6 @@ const ProcessForm = ({ open, onClose }) => {
               <TextField
                 label="Profile Summary"
                 variant="outlined"
-                multiline
-                rows={3}
                 fullWidth
                 value={record.profile_summary}
                 onChange={(e) =>
@@ -338,21 +350,14 @@ const ProcessForm = ({ open, onClose }) => {
             color="primary"
             onClick={handleSubmit}
             sx={{
-              mt: 4,
-              paddingX: 4,
-              paddingY: 1.5,
-              fontSize: "1.1rem",
-              borderRadius: 3, // Consistent border radius
-              textTransform: "none",
-              background: "linear-gradient(135deg, #62cff4, #02386e)",
+              mt: 3,
+              backgroundColor: "#1C3B74",
               "&:hover": {
-                background: "linear-gradient(135deg, #5a99f4, #02386e)",
-                transform: "scale(1.02)", // Consistent hover effect
-                boxShadow: "0px 8px 16px rgba(0, 0, 0, 0.3)",
+                backgroundColor: "#153E6E",
               },
             }}
           >
-            Submit
+            Add Professor
           </Button>
         </Box>
       </Fade>

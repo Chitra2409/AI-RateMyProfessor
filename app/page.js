@@ -28,7 +28,7 @@ const LandingPage = () => {
   const { user } = useUser();
   const adminEmails = process.env.NEXT_PUBLIC_ADMIN_EMAILS?.split(",") || [];
   const isAdmin =
-    user && adminEmails.includes(user.emailAddresses[0].emailAddress);
+  user && adminEmails.includes(user.emailAddresses[0].emailAddress);
  
     const [openFeedbackModal, setOpenFeedbackModal] = useState(false);
     const [openProcessModal, setOpenProcessModal] = useState(false); // State to control ProcessForm modal
@@ -290,52 +290,49 @@ const handleSchoolChange = (selectedSchool) => {
           </Link>
 
           {isAdmin ? (
-            // <Link href="/AddProfessor">
-            <Button
-              variant="contained"
-              color="primary"
-              sx={{
-                mt: 4,
-                background: "linear-gradient(135deg, #62cff4, #02386E)",
-                fontSize: "1.1rem",
-                color: "#fff",
-                paddingX: 3,
-                paddingY: 1.5,
-                borderRadius: 4,
-                textTransform: "none",
-                boxShadow: "0px 6px 12px rgba(0, 0, 0, 0.2)",
-                transition:
-                  "transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out",
-                "&:hover": {
-                  transform: "scale(1.02)",
-                  boxShadow: "0px 8px 16px rgba(0, 0, 0, 0.3)",
-                },
-              }}
-              onClick={handleOpenProcessModal} // Open ProcessForm modal
-            >
-              Add Professor
-            </Button>
-          ) : (
-            // </Link>
-            <Button
-              variant="outlined"
-              color="primary"
-              sx={{
-                mt: 4,
-                fontSize: "1.1rem",
-                paddingX: 3,
-                paddingY: 1.5,
-                borderRadius: 4,
-                textTransform: "none",
-                "&:hover": {
-                  backgroundColor: "#02386E",
-                  color: "#fff",
-                },
-              }}
-              onClick={handleOpenFeedbackModal}
-            >
-              Give Feedback
-            </Button>
+  <Button
+    variant="contained"
+    color="primary"
+    sx={{
+      mt: 4,
+      background: "linear-gradient(135deg, #62cff4, #02386E)",
+      fontSize: "1.1rem",
+      color: "#fff",
+      paddingX: 3,
+      paddingY: 1.5,
+      borderRadius: 4,
+      textTransform: "none",
+      boxShadow: "0px 6px 12px rgba(0, 0, 0, 0.2)",
+      transition: "transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out",
+      "&:hover": {
+        transform: "scale(1.02)",
+        boxShadow: "0px 8px 16px rgba(0, 0, 0, 0.3)",
+      },
+    }}
+    onClick={handleOpenProcessModal} // Open ProcessForm modal
+  >
+    Add Professor
+  </Button>
+) : (
+    <Button
+      variant="outlined"
+      color="primary"
+      sx={{
+        mt: 4,
+        fontSize: "1.1rem",
+        paddingX: 3,
+        paddingY: 1.5,
+        borderRadius: 4,
+        textTransform: "none",
+        "&:hover": {
+          backgroundColor: "#02386E",
+          color: "#fff",
+        },
+      }}
+      onClick={handleOpenFeedbackModal}
+    >
+      Give Feedback
+    </Button>
           )}
         </Box>
       </Container>
@@ -353,6 +350,7 @@ const handleSchoolChange = (selectedSchool) => {
         setProfessor={setProfessor}
         schoolsList={schoolsList}
         professorsList={professorsList}
+        user={user}
       />
       <ProcessForm open={openProcessModal} onClose={handleCloseProcessModal} />
       {/* Features Section */}

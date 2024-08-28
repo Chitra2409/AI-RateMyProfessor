@@ -10,7 +10,10 @@ import {
   FormControl,
   Select,
   InputLabel,
+  IconButton,
+  MenuProps,
 } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close"; // Import the close icon
 
 const FeedbackModal = ({
   open,
@@ -18,6 +21,7 @@ const FeedbackModal = ({
   rating,
   setRating,
   feedback,
+  user,
   setFeedback,
   handleSubmit,
   school,
@@ -50,6 +54,18 @@ const FeedbackModal = ({
           background: "linear-gradient(135deg, #f0f4f8, #ffffff)",
         }}
       >
+        <IconButton
+          aria-label="close"
+          onClick={onClose}
+          sx={{
+            position: "absolute",
+            right: 8,
+            top: 8,
+            color: (theme) => theme.palette.grey[500],
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
         <Typography
           id="feedback-modal-title"
           variant="h4"
@@ -111,6 +127,13 @@ const FeedbackModal = ({
                   fontSize: "1rem",
                 },
               }}
+              MenuProps={{
+                PaperProps: {
+                  sx: {
+                    maxHeight: 200, // Adjust this value as needed
+                  },
+                },
+              }}
             >
               {professorsList.map((professorItem) => (
                 <MenuItem key={professorItem} value={professorItem}>
@@ -170,6 +193,7 @@ const FeedbackModal = ({
             color="primary"
             onClick={handleSubmit}
             fullWidth
+            disabled={!user}
             sx={{
               mt: 3,
               paddingY: 1.5,
@@ -180,11 +204,30 @@ const FeedbackModal = ({
               "&:hover": {
                 background: "linear-gradient(90deg, #5a99f4, #02386e)",
               },
+              "&:disabled": {
+                background: "grey", // Set a grey background when the button is disabled
+                color: "rgba(255, 255, 255, 0.7)", // Lighten the text color
+                cursor: "not-allowed", // Change the cursor to indicate not allowed action
+              },
             }}
           >
             Submit Feedback
           </Button>
         </Box>
+        {!user && (
+          <Typography
+            // variant="caption"
+            sx={{
+              mt: 2,
+              color: "red", // Color for emphasis
+              fontWeight: "bold", // Make the text bold to draw attention
+              textAlign: "center", // Center the text for better alignment with form elements
+              fontSize:"0.8rem"
+            }}
+          >
+            Login or Sign Up First
+          </Typography>
+        )}
       </Box>
     </Modal>
   );
