@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Typography,
@@ -12,6 +12,7 @@ import {
   InputLabel,
   IconButton,
   MenuProps,
+  Autocomplete,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close"; // Import the close icon
 
@@ -31,6 +32,7 @@ const FeedbackModal = ({
   schoolsList,
   professorsList,
 }) => {
+  const [searchTerm, setSearchTerm] = useState("");
   return (
     <Modal
       open={open}
@@ -111,37 +113,28 @@ const FeedbackModal = ({
             </Select>
           </FormControl>
 
-          {/* Choose Professor */}
-          <FormControl fullWidth sx={{ mb: 2 }}>
-            <InputLabel id="select-professor-label">
-              Choose Professor
-            </InputLabel>
-            <Select
-              labelId="select-professor-label"
-              value={professor}
-              label="Choose Professor"
-              onChange={(e) => setProfessor(e.target.value)}
-              sx={{
-                "& .MuiOutlinedInput-root": {
-                  borderRadius: 3,
-                  fontSize: "1rem",
-                },
-              }}
-              MenuProps={{
-                PaperProps: {
-                  sx: {
-                    maxHeight: 200, // Adjust this value as needed
-                  },
-                },
-              }}
-            >
-              {professorsList.map((professorItem) => (
-                <MenuItem key={professorItem} value={professorItem}>
-                  {professorItem}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+          <Autocomplete
+            options={professorsList}
+            getOptionLabel={(option) => option} // Adjust this if your options are objects
+            value={professor}
+            onChange={(event, newValue) => {
+              setProfessor(newValue);
+            }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Choose Professor"
+                variant="outlined"
+                fullWidth
+              />
+            )}
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                borderRadius: 3,
+                fontSize: "1rem",
+              },
+            }}
+          />
 
           {/* Feedback */}
           <TextField
@@ -222,7 +215,7 @@ const FeedbackModal = ({
               color: "red", // Color for emphasis
               fontWeight: "bold", // Make the text bold to draw attention
               textAlign: "center", // Center the text for better alignment with form elements
-              fontSize:"0.8rem"
+              fontSize: "0.8rem",
             }}
           >
             Login or Sign Up First
