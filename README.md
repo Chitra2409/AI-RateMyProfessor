@@ -36,6 +36,42 @@ ProfSpector is a web application designed to help students find and rate profess
    npm install
    \`\`\`
 
+## Environment Variables
+
+Before running the application, you need to set up the following environment variables in a \`.env\` file:
+
+- \`OPENAI_API_KEY\`: Your OpenAI API key.
+- \`PINECONE_API_KEY\`: Your Pinecone API key.
+- \`NEXT_PUBLIC_CLERK_SIGN_IN_URL\`: URL for the sign-in page.
+- \`NEXT_PUBLIC_CLERK_SIGN_UP_URL\`: URL for the sign-up page.
+- \`NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY\`: Your Clerk publishable key.
+- \`CLERK_SECRET_KEY\`: Your Clerk secret key.
+- \`NEXT_PUBLIC_ADMIN_EMAILS\`: Admin email addresses.
+- \`ADMIN_PASSWORD\`: Password for admin access.
+
+### Steps to Get API Keys
+
+1. **OpenAI API Key:**
+   - Sign up or log in to [OpenAI](https://platform.openai.com/signup).
+   - Navigate to the API section in your account dashboard.
+   - Generate a new API key and set it as the \`OPENAI_API_KEY\` in your \`.env\` file.
+
+2. **Pinecone API Key:**
+   - Sign up or log in to [Pinecone](https://www.pinecone.io/).
+   - Create a new index or use an existing one.
+   - Go to the API keys section and generate a new key.
+   - Set this key as the \`PINECONE_API_KEY\` in your \`.env\` file.
+
+3. **Clerk API Keys:**
+   - Sign up or log in to [Clerk](https://clerk.dev/).
+   - Create a new application.
+   - In your application's dashboard, find the publishable key and secret key.
+   - Set these as \`NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY\` and \`CLERK_SECRET_KEY\` in your \`.env\` file.
+
+4. **Admin Emails and Password:**
+   - Set the \`NEXT_PUBLIC_ADMIN_EMAILS\` to the email you want to use for admin access.
+   - Set a secure \`ADMIN_PASSWORD\` to use for admin login.
+
 ## Usage
 
 1. **Start the development server:**
@@ -54,7 +90,7 @@ ProfSpector is a web application designed to help students find and rate profess
 - **Database:** Pinecone
 - **Authentication:** Clerk
 - **AI Integration:** OpenAI, Pinecone
-- **Deployment:** Vercel, AWS
+- **Deployment:** Vercel
 
 ## Contributing
 
