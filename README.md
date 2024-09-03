@@ -47,7 +47,6 @@ Before running the application, you need to set up the following environment var
 - `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`: Your Clerk publishable key.
 - `CLERK_SECRET_KEY`: Your Clerk secret key.
 - `NEXT_PUBLIC_ADMIN_EMAILS`: Admin email addresses.
-- `ADMIN_PASSWORD`: Password for admin access.
 
 ### Steps to Get API Keys
 
@@ -70,7 +69,6 @@ Before running the application, you need to set up the following environment var
 
 4. **Admin Emails and Password:**
    - Set the `NEXT_PUBLIC_ADMIN_EMAILS` to the email you want to use for admin access.
-   - Set a secure `ADMIN_PASSWORD` to use for admin login.
 
 ## Usage
 

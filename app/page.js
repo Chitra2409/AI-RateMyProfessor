@@ -26,7 +26,7 @@ import FeedbackModal from "./components/FeedbackModal";
 import Image from "next/image";
 
 const LandingPage = () => {
-  const { user } = useUser();
+const { user } = useUser();
 const adminEmails = process.env.NEXT_PUBLIC_ADMIN_EMAILS?.split(",") || [];
 const adminPassword = process.env.ADMIN_PASSWORD || '';
 
