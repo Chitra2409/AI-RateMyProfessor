@@ -89,6 +89,12 @@ export default function Home() {
     });
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter" && !showSchoolOptions) {
+      sendMessage();
+    }
+  };
+
   return (
     <Box
       display="flex"
@@ -276,6 +282,7 @@ export default function Home() {
             fullWidth
             value={message}
             onChange={(e) => setMessage(e.target.value)}
+            onKeyDown={handleKeyDown} // Trigger send on Enter key press
             sx={{
               bgcolor: "#ffffff",
               borderRadius: 4,
@@ -300,13 +307,10 @@ export default function Home() {
               transition:
                 "transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out",
               boxShadow: "0px 6px 12px rgba(0, 0, 0, 0.2)",
-              boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
-
               "&:hover": {
                 transform: "scale(1.05)", // Slightly scale up on hover
                 background: "linear-gradient(135deg, #1e88e5, #0277bd)",
                 boxShadow: "0px 8px 16px rgba(0, 0, 0, 0.3)",
-                boxShadow: "0px 6px 12px rgba(0, 0, 0, 0.2)",
               },
               "& .MuiButton-endIcon": {
                 transition: "transform 0.3s ease-in-out", // Animate the icon

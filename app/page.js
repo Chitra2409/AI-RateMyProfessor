@@ -26,25 +26,26 @@ import FeedbackModal from "./components/FeedbackModal";
 import Image from "next/image";
 
 const LandingPage = () => {
-const { user } = useUser();
-const adminEmails = process.env.NEXT_PUBLIC_ADMIN_EMAILS?.split(",") || [];
-const adminPassword = process.env.ADMIN_PASSWORD || '';
+  const { user } = useUser();
+  const adminEmails = process.env.NEXT_PUBLIC_ADMIN_EMAILS?.split(",") || [];
+  const adminPassword = process.env.ADMIN_PASSWORD || "";
 
-const isAdmin = user && adminEmails.includes(user.emailAddresses[0].emailAddress);
+  const isAdmin =
+    user && adminEmails.includes(user.emailAddresses[0].emailAddress);
 
-// Function to verify if the entered password matches the stored admin password
-const verifyAdminPassword = (enteredPassword) => {
-  return enteredPassword === adminPassword;
-};
+  // Function to verify if the entered password matches the stored admin password
+  const verifyAdminPassword = (enteredPassword) => {
+    return enteredPassword === adminPassword;
+  };
 
-// Example usage: Check if the user is an admin and the password is correct
-const enteredPassword = "user_provided_password_here"; // Get this from user input
+  // Example usage: Check if the user is an admin and the password is correct
+  const enteredPassword = "user_provided_password_here"; // Get this from user input
 
-if (isAdmin && verifyAdminPassword(enteredPassword)) {
-  console.log("User is an admin with the correct password.");
-} else {
-  console.log("User is not an admin or the password is incorrect.");
-}
+  if (isAdmin && verifyAdminPassword(enteredPassword)) {
+    console.log("User is an admin with the correct password.");
+  } else {
+    console.log("User is not an admin or the password is incorrect.");
+  }
 
   const [openFeedbackModal, setOpenFeedbackModal] = useState(false);
   const [openProcessModal, setOpenProcessModal] = useState(false); // State to control ProcessForm modal
@@ -109,7 +110,6 @@ if (isAdmin && verifyAdminPassword(enteredPassword)) {
     "Avita Katal",
     "Mr. Avishek Majumder",
     "Bhavana Kaushik",
-    "N/A",
     "Dr. Bhupendra Singh",
     "Christalin Nelson S",
     "Deepak Kumar Sharma",
@@ -120,7 +120,6 @@ if (isAdmin && verifyAdminPassword(enteredPassword)) {
     "Dr. Gaurav Bhardwaj",
     "Gaytri",
     "Gopal Singh Rawat",
-    "N/A",
     "Goutam Datta",
     "Hemant Petwal",
     "Dr. Juhi Agrawal",
@@ -132,7 +131,6 @@ if (isAdmin && verifyAdminPassword(enteredPassword)) {
     "Dr. Mitali Chugh",
     "Maithilee Laxmanrao Patawar",
     "Dr. Mohammad Ahsan",
-    "N/A",
     "Milton Kumar",
     "Dr. Muthukumar Ka",
     "Nadeem Yousuf Khanday",
@@ -161,7 +159,6 @@ if (isAdmin && verifyAdminPassword(enteredPassword)) {
     "Prof. (Dr.) Sanjay Biswash",
     "Sanoj Kumar",
     "Saroj Snehal Shivagunde",
-    "N/A",
     "Shahid Sultan Hajam",
     "Shahina Anwarul",
     "Saurabh Shanu",
@@ -217,18 +214,14 @@ if (isAdmin && verifyAdminPassword(enteredPassword)) {
     "Mr. Niteen Ramchandra Yeole",
     "Dr. Ajay Mittal",
     "Dr. Amit Kumar Thakur",
-    "N/A",
     "Dr. Ashish Aggarwal",
     "Dr. Atul Kumar Patidar",
-    "N/A",
-    "N/A",
     "Dr. G. Gopalakrishnan",
     "Dr. Gaurav Pandey",
     "Dr. Girish Chandra Kothyari",
     "Dr. Himanshu Kesarwani",
     "Dr. Harinandan Kumar",
     "Jagadeeshwar Kodavaty",
-    "N/A",
     "Mr. Manash Protim Mudoi",
     "Dr. Mandira Agarwal",
     "Dr. Murali Pujari",
@@ -248,7 +241,6 @@ if (isAdmin && verifyAdminPassword(enteredPassword)) {
     "Harshit Shukla",
     "Dr. Jitendra Yadav",
     "Kumar Gaurav",
-    "N/A",
     "Dr. Om Prakash",
     "Piyush Gaur",
     "Dr. Prashant Shukla",
@@ -272,11 +264,8 @@ if (isAdmin && verifyAdminPassword(enteredPassword)) {
     "Kanchan Deoli Bahukhandi",
     "Dr. Madhuben Sharma",
     "Prof. Rahul Silori",
-    "N/A",
-    "N/A",
     "Surendar Varadharajan",
     "Suvendu Manna",
-    "N/A",
     "Dr. Soumyaranjan Sahoo",
     "Dr. Ranjeet Kumar Brajpuriya",
     "Dr. Vipin Gaur",
@@ -298,7 +287,6 @@ if (isAdmin && verifyAdminPassword(enteredPassword)) {
     "Dr. Anil Kumar Sinha",
     "Dr. Ashishi Puri",
     "Dr. Ashish Mathur",
-    "N/A",
     "Dr. Anupam Bhandari",
     "Dr. Balendra Pratap Singh",
     "Dr. Bhuwan Chandra Joshi",
@@ -306,23 +294,15 @@ if (isAdmin && verifyAdminPassword(enteredPassword)) {
     "Dr. Bhawna Yadav Lamba",
     "Dr. Debashis Ghosh",
     "Dr. Divya Ahluwalia",
-    "N/A",
-    "N/A",
     "Dr. Kailash Pandey",
     "Dr. Kanak Pal Singh Parmar",
     "Dr. KSR Murthy",
-    "N/A",
     "Dr. Monalisa Anand",
     "Dr. Manjeet Singh Goyat",
     "Dr. Manisha Malik",
     "Dr. Niloopher Salam",
     "Monika Manglik",
-    "N/A",
     "Navjot Hothi",
-    "N/A",
-    "N/A",
-    "N/A",
-    "N/A",
     "Prashant Shambhudayal Rawat",
     "Dr. Rajeev Gupta",
     "Dr. Raju Roychowdhury",
@@ -407,7 +387,6 @@ if (isAdmin && verifyAdminPassword(enteredPassword)) {
     "Santosh Anand",
     "Dr. Debjani Mukherjee",
     "Dr. Vijaya",
-    "N/A",
     "Dr. Tarunpreet Kaur Ahuja",
     "Rajesh Tripathi",
     "Dr. Pramod Kumar Painuly",
@@ -537,7 +516,6 @@ if (isAdmin && verifyAdminPassword(enteredPassword)) {
     "Dr. Latika Choudhary",
     "Dr. Manika Kamthan",
     "Mehreen Manzoor",
-    "N/A",
     "Monica Pradyot",
     "Dr. Nanda Pardhey",
     "Navin Pal Singh",
@@ -748,30 +726,36 @@ if (isAdmin && verifyAdminPassword(enteredPassword)) {
             mt: { xs: 2, sm: 4 }, // Adjust margin-top for different screen sizes
           }}
         >
-          <Link href="/recommendation">
-            <Button
-              variant="contained"
-              color="primary"
-              sx={{
-                background: "linear-gradient(135deg, #62cff4, #02386E)",
-                fontSize: { xs: "0.9rem", sm: "1rem", md: "1.1rem" }, // Adjust font size for different screen sizes
-                color: "#fff",
-                paddingX: { xs: 2, sm: 3 },
-                paddingY: { xs: 1, sm: 1.5 },
-                borderRadius: 4,
-                textTransform: "none",
-                boxShadow: "0px 6px 12px rgba(0, 0, 0, 0.2)",
-                transition:
-                  "transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out",
-                "&:hover": {
-                  transform: "scale(1.02)", // Slightly scale up on hover
-                  boxShadow: "0px 8px 16px rgba(0, 0, 0, 0.3)",
-                },
-              }}
-            >
-              Get Started
-            </Button>
-          </Link>
+          <Button
+            variant="contained"
+            color="primary"
+            sx={{
+              background: "linear-gradient(135deg, #62cff4, #02386E)",
+              fontSize: { xs: "0.9rem", sm: "1rem", md: "1.1rem" },
+              color: "#fff",
+              paddingX: { xs: 2, sm: 3 },
+              paddingY: { xs: 1, sm: 1.5 },
+              borderRadius: 4,
+              textTransform: "none",
+              boxShadow: "0px 6px 12px rgba(0, 0, 0, 0.2)",
+              transition:
+                "transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out",
+              "&:hover": {
+                transform: "scale(1.02)",
+                boxShadow: "0px 8px 16px rgba(0, 0, 0, 0.3)",
+              },
+            }}
+            onClick={() => {
+              if (!user) {
+                alert("You must be logged in to access recommendations.");
+              } else {
+                // Programmatically navigate to /recommendation
+                window.location.href = "/recommendation";
+              }
+            }}
+          >
+            Get Started
+          </Button>
 
           {isAdmin ? (
             <Button
