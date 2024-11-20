@@ -14,6 +14,9 @@ import {
   Autocomplete,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close"; // Import the close icon
+import toast, { Toaster } from "react-hot-toast";
+
+
 
 const FeedbackModal = ({
   open,
@@ -66,6 +69,7 @@ const FeedbackModal = ({
 
       const result = await response.json();
       console.log("Feedback submitted successfully:", result);
+      toast.success("Feedback submitted successfully");
       onClose(); // Close modal after successful submission
       setSchool(null);
       setProfessor(null);

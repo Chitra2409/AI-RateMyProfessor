@@ -21,6 +21,7 @@
     "rag": "file:",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-hot-toast": "^2.4.1",
     "react-markdown": "^9.0.1",
     "react-responsive-carousel": "^3.2.23",
     "react-slick": "^0.30.2",
