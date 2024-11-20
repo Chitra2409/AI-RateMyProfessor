@@ -10,6 +10,7 @@ import {
   CircularProgress,
   Fade,
 } from "@mui/material";
+import RefreshIcon from "@mui/icons-material/Refresh";
 import SendIcon from "@mui/icons-material/Send";
 import ReactMarkdown from "react-markdown";
 
@@ -94,6 +95,16 @@ export default function Home() {
       sendMessage();
     }
   };
+
+  const handleRefresh= (event) => {
+    setMessages([{
+      role: "assistant",
+      content:
+        "Hi! I'm the Rate My Professor support assistant. How can I help you today?",
+    },]);
+    setShowSchoolOptions(true);
+    
+  }
 
   return (
     <Box
@@ -276,6 +287,29 @@ export default function Home() {
 
         {/* Input and Send Button */}
         <Stack direction="row" spacing={2} alignItems="center" sx={{ mt: 2 }}>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "55px",
+              height: "40px",
+              borderRadius: "50%",
+              background: "linear-gradient(135deg, #42a5f5, #1e88e5)",
+              color: "#fff",
+              boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
+              cursor: "pointer",
+              transition:
+                "transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out",
+              "&:hover": {
+                transform: "scale(1.1)", // Slight scale on hover
+                boxShadow: "0px 6px 12px rgba(0, 0, 0, 0.3)",
+              },
+            }}
+            onClick= {handleRefresh}
+          >
+            <RefreshIcon />
+          </Box>
           <TextField
             label="Type your message..."
             variant="outlined"

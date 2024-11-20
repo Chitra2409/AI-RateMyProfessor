@@ -11,7 +11,6 @@ import {
   Select,
   InputLabel,
   IconButton,
-  MenuProps,
   Autocomplete,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close"; // Import the close icon
@@ -24,7 +23,6 @@ const FeedbackModal = ({
   feedback,
   user,
   setFeedback,
-  handleSubmit,
   school,
   setSchool,
   professor,
@@ -33,6 +31,54 @@ const FeedbackModal = ({
   professorsList,
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false); // Loading state
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleSubmit = async () => {
+    setIsSubmitting(true);
+    setErrorMessage("");
+
+    try {
+      const response = await fetch("/api/addFeedback", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user,
+          school,
+          professor,
+          feedback,
+          rating,
+        }),
+      });
+      console.log("Data being sent to the API:", {
+        user,
+        school,
+        professor,
+        feedback,
+        rating,
+      });
+      
+      if (!response.ok) {
+        throw new Error("Failed to submit feedback. Please try again.");
+      }
+
+      const result = await response.json();
+      console.log("Feedback submitted successfully:", result);
+      onClose(); // Close modal after successful submission
+      setSchool(null);
+      setProfessor(null);
+      setRating(null);
+      setFeedback(null);
+    } catch (error) {
+      console.error("Error submitting feedback:", error);
+      setErrorMessage(error.message || "An unexpected error occurred.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <Modal
       open={open}
@@ -186,7 +232,7 @@ const FeedbackModal = ({
             color="primary"
             onClick={handleSubmit}
             fullWidth
-            disabled={!user}
+            disabled={!user || isSubmitting}
             sx={{
               mt: 3,
               paddingY: 1.5,
@@ -204,17 +250,31 @@ const FeedbackModal = ({
               },
             }}
           >
-            Submit Feedback
+            {isSubmitting ? "Submitting..." : "Submit Feedback"}
           </Button>
+
+          {/* Error Message */}
+          {errorMessage && (
+            <Typography
+              sx={{
+                mt: 2,
+                color: "red",
+                fontWeight: "bold",
+                textAlign: "center",
+                fontSize: "0.8rem",
+              }}
+            >
+              {errorMessage}
+            </Typography>
+          )}
         </Box>
         {!user && (
           <Typography
-            // variant="caption"
             sx={{
               mt: 2,
-              color: "red", // Color for emphasis
-              fontWeight: "bold", // Make the text bold to draw attention
-              textAlign: "center", // Center the text for better alignment with form elements
+              color: "red",
+              fontWeight: "bold",
+              textAlign: "center",
               fontSize: "0.8rem",
             }}
           >

@@ -37,6 +37,7 @@ export async function POST(req) {
     })
 
     const index = pc.index('rag').namespace('ns1')
+    const feedbackindex = pc.index('feedback').namespace('ns1')
     const openai = new OpenAI()
 
     const text = data[data.length - 1].content
@@ -47,6 +48,11 @@ export async function POST(req) {
     })
 
     const results = await index.query({
+        topK: 3,
+        includeMetadata: true,
+        vector: embedding.data[0].embedding
+    })
+    const result = await feedbackindex.query({
         topK: 3,
         includeMetadata: true,
         vector: embedding.data[0].embedding
