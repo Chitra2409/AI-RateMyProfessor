@@ -11,8 +11,20 @@ export async function POST(req) {
     try {
         // Parse incoming data (assuming it's in JSON formt)
         const record= await req.json()
+
+        // Construct rich searchable text combining key information
+        const searchableText = [
+            record.name,
+            record.department,
+            record.profile_summary,
+            record.research_interests,
+            record.courses_taught
+        ]
+            .filter(Boolean) // Remove undefined/null values
+            .join(' '); // Combine with spaces
+
         const response = await client.embeddings.create({
-            input: record.name,
+            input: searchableText,
             model: "text-embedding-3-small",
         });
 

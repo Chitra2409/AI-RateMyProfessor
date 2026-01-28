@@ -83,6 +83,21 @@ export async function POST(req) {
         resultString = '\n\nNo matching professors found. Please provide more specific information or check the query.'
     }
 
+    // Append feedback data to the result string
+    if (result.matches.length > 0) {
+        resultString += '\n\nStudent Feedback:'
+        result.matches.forEach((match) => {
+            resultString += `
+            {
+                "professor_name": "${match.metadata.professor_name || 'N/A'}",
+                "school": "${match.metadata.school || 'N/A'}",
+                "rating": "${match.metadata.rating || 'N/A'}",
+                "feedback": "${match.metadata.feedback || 'N/A'}"
+            }
+            \n\n`
+        })
+    }
+
     const lastMessage = data[data.length - 1]
     const lastMessageContent = lastMessage.content + resultString
     const lastDataWithoutLastMessage = data.slice(0, data.length - 1)

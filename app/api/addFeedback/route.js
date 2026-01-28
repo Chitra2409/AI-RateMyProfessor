@@ -25,7 +25,7 @@ export async function POST(req) {
         // Generate an embedding for the feedback using OpenAI
         const response = await client.embeddings.create({
             input: feedback,
-            model: "text-embedding-ada-002", // Adjust to the correct embedding model
+            model: "text-embedding-3-small", // Adjust to the correct embedding model
         });
 
         // Extract the embedding from the OpenAI response
