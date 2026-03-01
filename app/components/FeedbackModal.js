@@ -236,7 +236,7 @@ const FeedbackModal = ({
             color="primary"
             onClick={handleSubmit}
             fullWidth
-            disabled={!user || isSubmitting}
+            disabled={!user || isSubmitting || !school || !professor || !feedback || rating == null}
             sx={{
               mt: 3,
               paddingY: 1.5,

@@ -18,8 +18,14 @@ export async function POST(req) {
         const { school, professor, feedback, rating } = feedbackData;
 
         // Validate required fields
-        if (!school || !professor || !feedback || !rating) {
-            throw new Error("Missing required fields: school, professor, feedback, or rating");
+        if (!school || !professor || !feedback || rating == null || rating === '') {
+            return new NextResponse(
+                JSON.stringify({ error: "Missing required fields: school, professor, feedback, or rating" }),
+                {
+                    status: 400,
+                    headers: { 'Content-Type': 'application/json' },
+                }
+            );
         }
 
         // Generate an embedding for the feedback using OpenAI
