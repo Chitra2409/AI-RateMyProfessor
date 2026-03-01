@@ -1,6 +1,7 @@
 import { Pinecone } from '@pinecone-database/pinecone';
 import { NextResponse } from 'next/server';
 import { OpenAI } from 'openai'
+import { currentUser } from '@clerk/nextjs/server';
 
 const pc = new Pinecone({ apiKey: process.env.PINECONE_API_KEY });
 const index = pc.index("rag")
@@ -9,6 +10,27 @@ const client = new OpenAI();
 export async function POST(req) {
 
     try {
+        // Check if user is authenticated and is an admin
+        const user = await currentUser();
+
+        if (!user) {
+            return NextResponse.json(
+                { error: 'Unauthorized: User not authenticated' },
+                { status: 401 }
+            );
+        }
+
+        // Get admin emails from environment variable
+        const adminEmails = process.env.NEXT_PUBLIC_ADMIN_EMAILS?.split(',').map(email => email.trim()) || [];
+        const userEmail = user.emailAddresses[0]?.emailAddress;
+
+        if (!userEmail || !adminEmails.includes(userEmail)) {
+            return NextResponse.json(
+                { error: 'Forbidden: Admin access required' },
+                { status: 403 }
+            );
+        }
+
         // Parse incoming data (assuming it's in JSON formt)
         const record= await req.json()
 

@@ -1,25 +1,21 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
-export default clerkMiddleware((auth, req) => {
-  const session = auth();
+// Define routes that require authentication
+const isProtectedRoute = createRouteMatcher([
+  '/api/addProfessor(.*)',
+  '/dashboard(.*)'
+]);
 
-  // You can log or use session.userId to check if the user is authenticated
-  console.log(session.userId ? "User is authenticated" : "User is not authenticated");
-
-  // If you need to take specific actions based on authentication, you can do so here.
-  // But, do not enforce authentication or redirect.
+export default clerkMiddleware(async (auth, req) => {
+  // Protect routes that require authentication
+  if (isProtectedRoute(req)) {
+    await auth.protect();
+  }
 
   // Continue to the next middleware or the route handler
   return NextResponse.next();
 });
-
-const isProtectedRoute = createRouteMatcher([
-  // You can still define protected routes, but since we are not enforcing auth,
-  // this will be more for logging or conditional logic purposes.
-  '/dashboard(.*)', 
-  '/'
-]);
 
 export const config = {
   matcher: [
