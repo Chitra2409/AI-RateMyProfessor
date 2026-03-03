@@ -31,7 +31,7 @@ export async function POST(req) {
         }
 
         // Get admin emails from environment variable
-        const adminEmails = process.env.NEXT_PUBLIC_ADMIN_EMAILS?.split(',').map(email => email.trim()) || [];
+        const adminEmails = process.env.ADMIN_EMAILS?.split(',').map(email => email.trim()) || [];
         const userEmail = user.emailAddresses[0]?.emailAddress;
 
         if (!userEmail || !adminEmails.includes(userEmail)) {
@@ -41,18 +41,42 @@ export async function POST(req) {
             );
         }
 
-        // Parse incoming data (assuming it's in JSON formt)
-        const record= await req.json()
+        // Parse incoming data
+        const record = await req.json()
+
+        // Validate required field
+        if (!record.name || typeof record.name !== 'string' || !record.name.trim()) {
+            return NextResponse.json(
+                { error: 'Missing required field: name' },
+                { status: 400 }
+            );
+        }
+
+        // Allowlist: only pick known fields, ignore anything else
+        const allowedFields = {
+            name: record.name || '',
+            designation: record.designation || '',
+            profile_image: record.profile_image || '',
+            department: record.department || '',
+            profile_summary: record.profile_summary || '',
+            work_experience: record.work_experience || '',
+            research_interests: record.research_interests || '',
+            teaching_philosophy: record.teaching_philosophy || '',
+            courses_taught: record.courses_taught || '',
+            awards_and_grants: record.awards_and_grants || '',
+            scholarly_activities: record.scholarly_activities || '',
+            contact: record.contact || '',
+        };
 
         // Construct rich searchable text combining key information
         const searchableText = [
-            record.name,
-            record.department,
-            record.profile_summary,
-            record.research_interests,
-            record.courses_taught
+            allowedFields.name,
+            allowedFields.department,
+            allowedFields.profile_summary,
+            allowedFields.research_interests,
+            allowedFields.courses_taught
         ]
-            .filter(Boolean) // Remove undefined/null values
+            .filter(Boolean) // Remove empty strings
             .join(' '); // Combine with spaces
 
         const response = await client.embeddings.create({
@@ -63,11 +87,9 @@ export async function POST(req) {
         const embedding = response.data[0].embedding;
         const records = [
             {
-                id: record.name,
+                id: allowedFields.name,
                 values: embedding,
-                metadata: {
-                    ...record
-                }
+                metadata: allowedFields
             }]
         const res = await index.upsert(records)
 
