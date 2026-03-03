@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Container,
   Typography,
@@ -37,10 +37,16 @@ import {
 
 const LandingPage = () => {
   const { user } = useUser();
-  const adminEmails = process.env.NEXT_PUBLIC_ADMIN_EMAILS?.split(",") || [];
+  const [isAdmin, setIsAdmin] = useState(false);
 
-  const isAdmin =
-    user && adminEmails.includes(user.emailAddresses[0].emailAddress);
+  useEffect(() => {
+    if (user) {
+      fetch('/api/checkAdmin')
+        .then(res => res.json())
+        .then(data => setIsAdmin(data.isAdmin))
+        .catch(() => setIsAdmin(false));
+    }
+  }, [user]);
 
   const [openFeedbackModal, setOpenFeedbackModal] = useState(false);
   const [openProcessModal, setOpenProcessModal] = useState(false); // State to control ProcessForm modal
