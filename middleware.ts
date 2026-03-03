@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 // Define routes that require authentication
 const isProtectedRoute = createRouteMatcher([
   '/api/addProfessor(.*)',
+  '/api/addFeedback(.*)',
   '/api/chat(.*)',
   '/dashboard(.*)'
 ]);

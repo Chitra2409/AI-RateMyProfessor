@@ -2,6 +2,9 @@ import { NextResponse } from 'next/server'
 import { Pinecone } from '@pinecone-database/pinecone'
 import OpenAI from 'openai'
 import { auth } from '@clerk/nextjs/server'
+import { rateLimit } from '../../lib/rateLimit'
+
+const chatLimiter = rateLimit({ limit: 15, windowMs: 60000 }) // 15 requests per minute
 
 const systemPrompt = `
 You are an AI-driven professor recommendation assistant. Your job is to provide accurate and relevant information about professors based on user queries. Always ensure to:
@@ -36,6 +39,9 @@ export async function POST(req) {
       if (!userId) {
           return new NextResponse('Unauthorized', { status: 401 })
       }
+    if (chatLimiter(userId)) {
+        return new NextResponse('Too many requests', { status: 429 })
+    }
     const data = await req.json()
     // --- Prompt injection protection ---
       // 1. Ensure data is an array

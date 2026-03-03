@@ -1,6 +1,10 @@
 import { Pinecone } from '@pinecone-database/pinecone';
 import { NextResponse } from 'next/server';
 import { OpenAI } from 'openai';
+import { auth } from '@clerk/nextjs/server';
+import { rateLimit } from '../../lib/rateLimit';
+
+const feedbackLimiter = rateLimit({ limit: 5, windowMs: 60000 }); // 5 requests per minute
 
 // Initialize Pinecone client
 const pc = new Pinecone({ apiKey: process.env.PINECONE_API_KEY });
@@ -11,6 +15,20 @@ const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 export async function POST(req) {
     try {
+        // Verify user is authenticated
+          const { userId } = await auth();
+          if (!userId) {
+              return new NextResponse(
+                  JSON.stringify({ error: "Unauthorized: Please log into submit feedback" }),
+                  { status: 401, headers: { 'Content-Type':'application/json' } }
+              );
+          }
+        if (feedbackLimiter(userId)) {
+            return new NextResponse(
+                JSON.stringify({ error: "Too many requests. Please try again later." }),
+                { status: 429, headers: { 'Content-Type': 'application/json' } }
+            );
+        }
         // Parse incoming data (assuming it's in JSON format)
         const feedbackData = await req.json();
 
@@ -49,6 +67,7 @@ export async function POST(req) {
                     professor,
                     feedback,
                     rating,
+                    userId, // Server-verified user ID from Clerk session
                     timestamp: new Date().toISOString(), // Add a timestamp for tracking
                 },
             },

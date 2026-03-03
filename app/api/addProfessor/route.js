@@ -2,6 +2,9 @@ import { Pinecone } from '@pinecone-database/pinecone';
 import { NextResponse } from 'next/server';
 import { OpenAI } from 'openai'
 import { currentUser } from '@clerk/nextjs/server';
+import { rateLimit } from '../../lib/rateLimit';
+
+const professorLimiter = rateLimit({ limit: 10, windowMs: 60000 }); // 10 requests per minute
 
 const pc = new Pinecone({ apiKey: process.env.PINECONE_API_KEY });
 const index = pc.index("rag")
@@ -17,6 +20,13 @@ export async function POST(req) {
             return NextResponse.json(
                 { error: 'Unauthorized: User not authenticated' },
                 { status: 401 }
+            );
+        }
+
+        if (professorLimiter(user.id)) {
+            return NextResponse.json(
+                { error: 'Too many requests. Please try again later.' },
+                { status: 429 }
             );
         }
 
