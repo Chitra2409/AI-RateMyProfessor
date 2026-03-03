@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { Pinecone } from '@pinecone-database/pinecone'
 import OpenAI from 'openai'
+import { auth } from '@clerk/nextjs/server'
 
 const systemPrompt = `
 You are an AI-driven professor recommendation assistant. Your job is to provide accurate and relevant information about professors based on user queries. Always ensure to:
@@ -31,7 +32,27 @@ You are an AI-driven professor recommendation assistant. Your job is to provide 
 `
 
 export async function POST(req) {
+    const { userId } = await auth()
+      if (!userId) {
+          return new NextResponse('Unauthorized', { status: 401 })
+      }
     const data = await req.json()
+    // --- Prompt injection protection ---
+      // 1. Ensure data is an array
+      if (!Array.isArray(data) || data.length === 0) {
+          return new NextResponse('Invalid request body', { status: 400 })
+      }
+
+      // 2. Only allow 'user' and 'assistant' roles, enforce string content
+      const allowedRoles = new Set(['user', 'assistant'])
+      const sanitizedData = data
+          .filter(msg => msg && allowedRoles.has(msg.role) && typeof msg.content === 'string')
+          .slice(-20) // 3. Cap history to last 20 messages to prevent abuse
+
+      if (sanitizedData.length === 0 || sanitizedData[sanitizedData.length - 1].role !== 'user') {
+          return new NextResponse('Invalid message format', { status: 400 })
+      }
+      // --- End prompt injection protection ---
     const pc = new Pinecone({
         apiKey: process.env.PINECONE_API_KEY,
     })
@@ -40,7 +61,7 @@ export async function POST(req) {
     const feedbackindex = pc.index('feedback').namespace('ns1')
     const openai = new OpenAI()
 
-    const text = data[data.length - 1].content
+    const text = sanitizedData[sanitizedData.length - 1].content
     const embedding = await openai.embeddings.create({
         model: 'text-embedding-3-small',
         input: text,
@@ -98,9 +119,9 @@ export async function POST(req) {
         })
     }
 
-    const lastMessage = data[data.length - 1]
+    const lastMessage = sanitizedData[sanitizedData.length - 1]
     const lastMessageContent = lastMessage.content + resultString
-    const lastDataWithoutLastMessage = data.slice(0, data.length - 1)
+    const lastDataWithoutLastMessage = sanitizedData.slice(0, sanitizedData.length - 1)
     const completion = await openai.chat.completions.create({
         messages: [
             {
