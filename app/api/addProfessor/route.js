@@ -85,9 +85,10 @@ export async function POST(req) {
         });
 
         const embedding = response.data[0].embedding;
+        const professorId = `${allowedFields.name}-${allowedFields.department}-${allowedFields.contact}`.replace(/\s+/g, '_');
         const records = [
             {
-                id: allowedFields.name,
+                id: professorId,
                 values: embedding,
                 metadata: allowedFields
             }]

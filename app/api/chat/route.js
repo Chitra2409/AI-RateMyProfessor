@@ -89,22 +89,21 @@ export async function POST(req) {
     if (results.matches.length > 0) {
         resultString += '\n\nReturned results from vector db:'
         results.matches.forEach((match) => {
-            resultString += `
-            {
-                "name": "${match.metadata.name}",
-                "designation": "${match.metadata.designation}",
-                "profile_image": "${match.metadata.profile_image}",
-                "department": "${match.metadata.department}",
-                "profile_summary": "${match.metadata.profile_summary}",
-                "work_experience": "${match.metadata.work_experience}",
-                "research_interests": "${match.metadata.research_interests}",
-                "teaching_philosophy": "${match.metadata.teaching_philosophy}",
-                "courses_taught": "${match.metadata.courses_taught}",
-                "awards_and_grants": "${match.metadata.awards_and_grants}",
-                "scholarly_activities": "${match.metadata.scholarly_activities}",
-                "contact": "${match.metadata.contact}"
+            const professorData = {
+                name: match.metadata.name || '',
+                designation: match.metadata.designation || '',
+                profile_image: match.metadata.profile_image || '',
+                department: match.metadata.department || '',
+                profile_summary: match.metadata.profile_summary || '',
+                work_experience: match.metadata.work_experience || '',
+                research_interests: match.metadata.research_interests || '',
+                teaching_philosophy: match.metadata.teaching_philosophy || '',
+                courses_taught: match.metadata.courses_taught || '',
+                awards_and_grants: match.metadata.awards_and_grants || '',
+                scholarly_activities: match.metadata.scholarly_activities || '',
+                contact: match.metadata.contact || '',
             }
-            \n\n`
+            resultString += '\n' + JSON.stringify(professorData) + '\n'
         })
     } else {
         resultString = '\n\nNo matching professors found. Please provide more specific information or check the query.'
@@ -114,14 +113,13 @@ export async function POST(req) {
     if (result.matches.length > 0) {
         resultString += '\n\nStudent Feedback:'
         result.matches.forEach((match) => {
-            resultString += `
-            {
-                "professor_name": "${match.metadata.professor_name || 'N/A'}",
-                "school": "${match.metadata.school || 'N/A'}",
-                "rating": "${match.metadata.rating || 'N/A'}",
-                "feedback": "${match.metadata.feedback || 'N/A'}"
+            const feedbackData = {
+                professor_name: match.metadata.professor_name || 'N/A',
+                school: match.metadata.school || 'N/A',
+                rating: match.metadata.rating || 'N/A',
+                feedback: match.metadata.feedback || 'N/A',
             }
-            \n\n`
+            resultString += '\n' + JSON.stringify(feedbackData) + '\n'
         })
     }
 
